@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate
 from .models import User
+from portfolio_app.models import Portfolio
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import (
@@ -15,6 +16,7 @@ class SignUp(APIView):
     def post(self, request):
         request.data["username"] = request.data["email"]
         new_user = User.objects.create_user(**request.data)
+        new_portfolio = Portfolio.objects.create(user = new_user, money = 10000.00)
         print(request.data)
         print(new_user)
         token = Token.objects.create(user=new_user)
