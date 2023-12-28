@@ -4,14 +4,14 @@ from datetime import datetime
 import requests
 from .models import StockMarket
 from django.utils import timezone
+from dinostocks_proj.settings import env
 
 
 @shared_task
 def get_stock_data():
     # Your periodic task code goes here
-    print(f"Running periodic task at {datetime.now()}")
     headers = {
-        "X-RapidAPI-Key": "1cf984c37dmsh7f39b0c10c9865ep148ad9jsn280f86f4724b",
+        "X-RapidAPI-Key": env.get("RAPID_API_KEY"),
         "X-RapidAPI-Host": "realstonks.p.rapidapi.com",
     }
 

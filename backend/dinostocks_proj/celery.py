@@ -20,6 +20,6 @@ celery_app.autodiscover_tasks()
 celery_app.conf.beat_schedule = {
     "run-every-hour": {
         "task": "realstonks_app.tasks.get_stock_data",
-        "schedule": crontab(minute=0, hour="*"),  # Run every hour
+        "schedule": crontab(minute=15, hour="*"),  # Run every hour
     },
 }
