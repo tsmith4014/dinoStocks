@@ -37,7 +37,7 @@ const MarketPage = () => {
               <td>{stock.symbol}</td>
               <td>${stock.price}</td>
               <td className={stock.change.startsWith('-') ? 'text-danger' : 'text-success'}>
-                {stock.change.startsWith('-') ? '🔻' : '🔺'}{stock.change}
+                {stock.change.startsWith('-') ? '↓' : '↑'}{stock.change}
               </td>
               <td className={stock.percentChange.startsWith('-') ? 'text-danger' : 'text-success'}>
                 {stock.percentChange}
