@@ -37,11 +37,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'rest_framework',
-    'rest_framework.authtoken',
-    'corsheaders',
+    "rest_framework",
+    "rest_framework.authtoken",
+    "corsheaders",
     "user_app",
-    "portfolio_app"
+    "realstonks_app",
+    "portfolio_app",
 ]
 
 MIDDLEWARE = [
@@ -58,8 +59,8 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = "dinostocks_proj.urls"
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
     ],
 }
 
@@ -96,7 +97,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
-AUTH_USER_MODEL = 'user_app.User'
+AUTH_USER_MODEL = "user_app.User"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
