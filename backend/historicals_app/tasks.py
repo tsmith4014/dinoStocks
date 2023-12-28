@@ -11,6 +11,7 @@ from historicals_app.models import Historicals
 
 @shared_task
 def get_portfolio_values():
+    print(f"Running get_portfolio_values at {datetime.now()}")
     portfolios = Portfolio.objects.all()
     for portfolio in portfolios:
         portfolio_value = 0.00

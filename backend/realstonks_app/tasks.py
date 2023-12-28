@@ -9,6 +9,7 @@ from dinostocks_proj.settings import env
 
 @shared_task
 def get_stock_data():
+    print(f"Running get_stock_data at {datetime.now()}")
     # Your periodic task code goes here
     headers = {
         "X-RapidAPI-Key": env.get("RAPID_API_KEY"),
