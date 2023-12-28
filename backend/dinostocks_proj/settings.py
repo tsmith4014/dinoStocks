@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "portfolio_app",
     "realstonks_app",
     "historicals_app",
+    "shares_app",
 ]
 
 MIDDLEWARE = [
