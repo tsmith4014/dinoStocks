@@ -24,7 +24,7 @@ const SignUp = ()=>{
             userAPI.defaults.headers.common[
                 "Authorization"
             ] = `Token ${response.data.token}`
-            navigate("/")
+            navigate("/overview/")
         }
         else {
             alert("Something went wrong.")
