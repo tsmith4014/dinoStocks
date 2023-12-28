@@ -7,7 +7,7 @@ import DinoStocks from '../assets/images/DinoStocks.png';
 const NavBar = ({ user, setUser }) => {
     console.log("Current user in NavBar:", user);
   const logOut = async () => {
-    let response = await userAPI.post("logout/");
+    let response = await userAPI.post("LogOut/");
     if (response.status === 204) {
       setUser(null);
       localStorage.removeItem("token");
