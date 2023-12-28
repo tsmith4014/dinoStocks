@@ -7,8 +7,5 @@ from .serializers import PortfolioSerializer
 class PortfolioInfo(APIView):
     def get(self, request):
         portfolio_obj = PortfolioSerializer(request.user.portfolio)
-        # portfolio_obj = Portfolio.objects.get(id=request.user_id)
-        # if PortfolioSerializer(portfolio_obj):
-        #     return Response(portfolio_obj)
         print(portfolio_obj.data)
         return Response(portfolio_obj.data)

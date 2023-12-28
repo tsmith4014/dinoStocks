@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate
 from .models import User
 from portfolio_app.models import Portfolio
+from .serializers import UserSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import (
@@ -42,10 +43,12 @@ class UserPermissions(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-# class Info(UserPermissions):
-#     def get(self, request):
-#         user = CrewMemberSerializer(request.user)
-#         return Response(user.data)
+class Info(UserPermissions):
+    def get(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        serialized_user = serializer.data
+        return Response(serialized_user)
         
 class LogOut(UserPermissions):
     def post(self, request):
