@@ -2,6 +2,7 @@ import React from 'react';
 import { Navbar, Nav, Container, Button, NavItem } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import { userAPI } from "../utilities";  
+import DinoStocks from '../assets/images/DinoStocks.png';
 
 const NavBar = ({ user, setUser }) => {
     console.log("Current user in NavBar:", user);
@@ -17,7 +18,14 @@ const NavBar = ({ user, setUser }) => {
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
-        <Navbar.Brand as={Link} to="/">Dino Stocks</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">
+            <img
+                src={DinoStocks}
+                alt="Dino Stocks Logo"
+                height="30"
+            />{' '}
+            Dino Stocks
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -33,6 +41,7 @@ const NavBar = ({ user, setUser }) => {
           ) : (
             <>
               <Button as={Link} to="/login" variant="success" style={{ marginLeft: '10px' }}>Log In </Button>
+              <Button as={Link} to="/signup" variant="success" style={{ marginLeft: '10px' }}>Sign Up </Button>
             </>
           )}
         </Navbar.Collapse>
