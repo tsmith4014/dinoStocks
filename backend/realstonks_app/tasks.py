@@ -3,6 +3,7 @@ from celery import shared_task
 from datetime import datetime
 import requests
 from .models import StockMarket
+from django.utils import timezone
 
 
 @shared_task
@@ -41,12 +42,13 @@ def get_stock_data():
         dino_stock = {}
         url = f"https://realstonks.p.rapidapi.com/{stock}"
         response = requests.get(url, headers=headers)
-        for item in response.json():
-            dino_stock[item] = response.json()[item]
+        if response.json():
+            for item in response.json():
+                dino_stock[item] = response.json()[item]
         currentStock = StockMarket.objects.get(ticker=stock)
         currentStock.price = dino_stock.get("price", 0.0)
         currentStock.change_point = dino_stock.get("change_point", 0.0)
         currentStock.change_percentage = dino_stock.get("change_percentage", 0.0)
         currentStock.total_vol = dino_stock.get("total_vol", "")
-        currentStock.timestamp = datetime.now()
+        currentStock.timestamp = timezone.now()
         currentStock.save()
