@@ -1,6 +1,9 @@
 import { Outlet } from 'react-router-dom'
 import './App.css'
 import { useEffect, useState } from 'react'
+import NavBar from './components/NavBar'
+
+
 
 function App() {
   const[user,setUser]= useState(null)
@@ -18,7 +21,9 @@ getInfo()
 },[])
   return (
     <>
+    <NavBar user={user} setUser={setUser}/>
     <Outlet context={{user,setUser}}/>
+    
     </>
   )
 }

@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 
-const LogIn = () => {
+const LogIn = ({ setUser }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -23,6 +23,8 @@ const LogIn = () => {
                 userAPI.defaults.headers.common[
                     "Authorization"
                 ] = `Token ${response.data.token}`;
+                setUser(response.data.username);
+                console.log("User logged in:", response.data.username);
                 navigate("/overview/");
             } else {
                 // Handle unexpected response status codes here
