@@ -1,0 +1,48 @@
+.image-overlay-container {
+    position: relative;
+    text-align: center;
+    color: white;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    border: none;
+  }
+  
+  .hero-image-container {
+    position: relative;
+    z-index: 1;
+  
+  }
+  
+  .hero-image-container img {
+    width: 100%;
+    display: block; 
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+    transition: all .3s ease-in-out;
+  }
+  
+  
+  .overlay-text {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3; 
+    color: white;
+  }
+  
+  .overlay-text h1 {
+    font-size: 5rem; 
+    color: white; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+    
+  }
+  
+  #features {
+    padding-top: 1rem;
+  }
+  
+  #features .card {
+    border: none;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+    transition: all .3s ease-in-out;
+  }
