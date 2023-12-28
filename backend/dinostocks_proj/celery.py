@@ -22,4 +22,8 @@ celery_app.conf.beat_schedule = {
         "task": "realstonks_app.tasks.get_stock_data",
         "schedule": crontab(minute=15, hour="*"),  # Run every hour
     },
+    "portfolio-value": {
+        "task" : "historicals_app.tasks.get_portfolio_values",
+        "schedule": crontab(minute=20,hour="*"),
+    }
 }

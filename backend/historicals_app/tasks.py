@@ -12,11 +12,13 @@ from historicals_app.models import Historicals
 def get_portfolio_values():
     portfolios = Portfolio.objects.all()
     for portfolio in portfolios:
-        portfolio_value = 0
-        shares = portfolio.shares.all()
-        for share in shares:
-            current_stock_data = StockMarket.objects.get(ticker=share.ticker)
-            portfolio_value += share.shares * current_stock_data.price
-            new_historical = Historicals.objects.create(
-                portfolio=portfolio.id, portfolio_value=portfolio_value
-            )
+        portfolio_value = 0.00
+        # if portfolio.shares:
+        #     shares = portfolio.shares.all()
+        #     for share in shares:
+        #         current_stock_data = StockMarket.objects.get(ticker=share.ticker)
+        #         portfolio_value += share.shares * current_stock_data.price
+        new_historical = Historicals.objects.create(
+            portfolio=portfolio, value=portfolio_value
+        )
+        print(new_historical)
