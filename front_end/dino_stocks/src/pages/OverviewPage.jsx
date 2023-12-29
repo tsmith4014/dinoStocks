@@ -3,7 +3,7 @@ import { Container, Row, Col, Card, Table } from 'react-bootstrap';
 import axios from 'axios';
 import { userAPI } from '../utilities';
 const OverviewPage = () => {
-const [userInfo, setUserInfo]= useState([])
+  const [userInfo, setUserInfo] = useState([])
 
   const mockStockData = [
     { stock: 'Dino Corp', details: '20 shares @ $50', price: '$1000' },
@@ -11,35 +11,36 @@ const [userInfo, setUserInfo]= useState([])
     { stock: 'Prehistoric Inc', details: '5 shares @ $120', price: '$600' },
   ];
 
-  const fetchPortfolio = async ()=>{
-    let token=localStorage.getItem("token")
-    if (token){
+  const fetchPortfolio = async () => {
+    let token = localStorage.getItem("token")
+    if (token) {
       try {
-      let response = await axios.get(`http://127.0.0.1:8000/api/v1/portfolio/`,{
-        headers:{
-          Authorization:`Token ${token}`
-        }
-      })
-      console.log(response)
-      setUserInfo(response.data)
-  } catch (error) {
-    console.error("Error fetching portfolio:", error);
-  }}
+        let response = await axios.get(`http://127.0.0.1:8000/api/v1/portfolio/`, {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        })
+        console.log(response)
+        setUserInfo(response.data)
+      } catch (error) {
+        console.error("Error fetching portfolio:", error);
+      }
+    }
 
   }
   useEffect(() => {
     const fetchData = async () => {
       await fetchPortfolio();
     };
-  
+
     fetchData();
-  }, []); 
+  }, []);
 
 
 
 
-   
-console.log(userInfo)
+
+  console.log(userInfo)
   return (
     <Container fluid>
       <Row className="my-4">
@@ -79,7 +80,10 @@ console.log(userInfo)
                   <tr>
                     <th>Stock</th>
                     <th>Shares</th>
+                    <th>Current Price</th>
                     <th>Purchase Price</th>
+                    <th>Change</th>
+                    <th>Current Value</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -87,7 +91,10 @@ console.log(userInfo)
                     <tr key={index}>
                       <td>{stock.dino_name}</td>
                       <td>{stock.shares}</td>
-                      <td>{stock.price_at_purchase*stock.shares}</td>
+                      <td>{stock.current_price}</td>
+                      <td>{stock.price_at_purchase}</td>
+                      <td className={(stock.current_price - stock.price_at_purchase).toFixed(2).startsWith('-') ? 'text-danger' : 'text-success'}> {(stock.current_price - stock.price_at_purchase).toFixed(2).startsWith('-') ? '↓' : '↑'}{(stock.current_price - stock.price_at_purchase).toFixed(2)}</td>
+                      <td>{(stock.current_price * stock.shares).toFixed(2)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -97,6 +104,7 @@ console.log(userInfo)
         </Col>
       </Row>
     </Container>
-  ); };
+  );
+};
 
 export default OverviewPage;
