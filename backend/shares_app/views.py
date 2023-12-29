@@ -10,16 +10,17 @@ from rest_framework.status import (
     HTTP_404_NOT_FOUND,
 )
 
+
 class All_Stocks_Shares(APIView):
     def get(self, request):
         try:
             portfolio = request.user.portfolio
             shares = portfolio.shares.all()
             ser_shares = SharesSerializer(shares, many=True)
-            return Response(ser_shares.data)
+            return Response(ser_shares.data, status=HTTP_204_NO_CONTENT)
         except:
             print("didn't work")
-            return Response(False)
+            return Response("data not found", status=HTTP_404_NOT_FOUND)
 
     def post(self, request):
         """User Buys Shares"""
@@ -42,7 +43,7 @@ class All_Stocks_Shares(APIView):
             portfolio.money -= price
             portfolio.save()
             print(new_shares)
-            return Response(SharesSerializer(new_shares).data)
+            return Response(SharesSerializer(new_shares).data, status=HTTP_201_CREATED)
         except:
             print("Didn't work")
             return Response(False, status=HTTP_400_BAD_REQUEST)
@@ -56,25 +57,25 @@ class Single_Stock_Shares(APIView):
             return Response(serializer.data, status=HTTP_204_NO_CONTENT)
         except:
             return Response("Shares_id doesn't exist", status=HTTP_404_NOT_FOUND)
-        
-    def delete(self, request,shares_id):
+
+    def delete(self, request, shares_id):
         """Sell all shares"""
         try:
             portfolio = request.user.portfolio
             single_stock = portfolio.shares.get(id=shares_id)
             current_price = StockMarket.objects.get(ticker=single_stock.ticker).price
             print(current_price * single_stock.shares, portfolio.money)
-            portfolio.money += current_price*single_stock.shares
+            portfolio.money += current_price * single_stock.shares
             portfolio.save()
             single_stock.delete()
             return Response(
                 f"{current_price*single_stock.shares} has been added to your account. Total: {portfolio.money}",
-                status=HTTP_204_NO_CONTENT
+                status=HTTP_204_NO_CONTENT,
             )
         except:
             return Response("Shares_id doesn't exist", status=HTTP_400_BAD_REQUEST)
-        
-    def put (self,request, shares_id):
+
+    def put(self, request, shares_id):
         """Sell or buy some shares user already owns"""
         try:
             portfolio = request.user.portfolio
@@ -99,7 +100,7 @@ class Single_Stock_Shares(APIView):
                     single_stock.delete()
                     return Response(
                         f"Transaction complete. All shares sold. Money:{portfolio.money}",
-                        status=HTTP_204_NO_CONTENT
+                        status=HTTP_204_NO_CONTENT,
                     )
                 else:
                     total = current_price * shares
@@ -109,7 +110,7 @@ class Single_Stock_Shares(APIView):
                     single_stock.save()
             return Response(
                 f"Transaction complete. Current Shares: {single_stock.shares} Money:{portfolio.money}",
-                status=HTTP_204_NO_CONTENT
-                )
+                status=HTTP_204_NO_CONTENT,
+            )
         except:
             return Response("Error handling transaction.", status=HTTP_400_BAD_REQUEST)

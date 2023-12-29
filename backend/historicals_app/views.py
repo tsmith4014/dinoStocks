@@ -3,13 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Historicals
 from .serializers import HistoricalSerializer
-from portfolio_app.models import Portfolio
-from portfolio_app.serializers import PortfolioSerializer
-from realstonks_app.models import StockMarket
 from rest_framework.status import (
-    HTTP_201_CREATED,
     HTTP_204_NO_CONTENT,
-    HTTP_400_BAD_REQUEST,
     HTTP_404_NOT_FOUND,
 )
 
