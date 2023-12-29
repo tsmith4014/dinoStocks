@@ -20,10 +20,10 @@ celery_app.autodiscover_tasks()
 celery_app.conf.beat_schedule = {
     "run-every-hour": {
         "task": "realstonks_app.tasks.get_stock_data",
-        "schedule": crontab(minute=15, hour="*"),  # Run every hour
+        "schedule": crontab(minute=30, hour="*"),  # Run every hour
     },
     "portfolio-value": {
         "task" : "historicals_app.tasks.get_portfolio_values",
-        "schedule": crontab(minute=8,hour="*"),
+        "schedule": crontab(minute=31,hour="*"),
     }
 }
