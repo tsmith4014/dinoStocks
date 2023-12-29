@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom'
 import './App.css'
 import { useEffect, useState } from 'react'
 import NavBar from './components/NavBar'
+import { userAPI } from './utilities'
 
 
 
@@ -11,14 +12,16 @@ function App() {
   const getInfo = async()=>{
     let token=localStorage.getItem("token")
     if (token){
-      api.defaults.headers.common["Authorization"] = `Token ${token}`
-      let response= await api.get("info/")
+      userAPI.defaults.headers.common["Authorization"] = `Token ${token}`
+      let response= await userAPI.get("")
       setUser(response.data.username)
+      console.log(token)
     }
   }
 useEffect(()=>{
 getInfo()
 },[])
+
   return (
     <>
     <NavBar user={user} setUser={setUser}/>

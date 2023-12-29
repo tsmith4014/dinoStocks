@@ -23,7 +23,7 @@ celery_app.conf.beat_schedule = {
         "schedule": crontab(minute=0, hour="*"),  # Run every hour
     },
     "portfolio-value": {
-        "task": "historicals_app.tasks.get_portfolio_values",
-        "schedule": crontab(minute=1, hour="*"),
-    },
+        "task" : "historicals_app.tasks.get_portfolio_values",
+        "schedule": crontab(minute=1,hour="*"),
+    }
 }

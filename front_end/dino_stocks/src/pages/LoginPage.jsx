@@ -2,7 +2,7 @@ import LogIn from "../components/LogIn"
 import { useOutletContext } from "react-router-dom";
 
 const LoginPage = () =>{
-    const { setUser } = useOutletContext()
+    const { user, setUser } = useOutletContext()
 
 
     return(

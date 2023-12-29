@@ -1,15 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Table } from 'react-bootstrap';
-
+import axios from 'axios';
+import { userAPI } from '../utilities';
 const OverviewPage = () => {
-  // Mock data for the table
+const [userInfo, setUserInfo]= useState([])
+
   const mockStockData = [
     { stock: 'Dino Corp', details: '20 shares @ $50', price: '$1000' },
     { stock: 'Jurassic Ventures', details: '10 shares @ $80', price: '$800' },
     { stock: 'Prehistoric Inc', details: '5 shares @ $120', price: '$600' },
-    // Add more mock data as needed
   ];
 
+  const fetchPortfolio = async ()=>{
+    let token=localStorage.getItem("token")
+    if (token){
+      try {
+      let response = await axios.get(`http://127.0.0.1:8000/api/v1/portfolio/`,{
+        headers:{
+          Authorization:`Token ${token}`
+        }
+      })
+      setUserInfo(response.data)
+  } catch (error) {
+    console.error("Error fetching portfolio:", error);
+  }}
+
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchPortfolio();
+    };
+  
+    fetchData();
+  }, []); 
+   
+console.log(userInfo)
   return (
     <Container fluid>
       <Row className="my-4">
@@ -18,7 +43,7 @@ const OverviewPage = () => {
             <Card.Img variant="top" src="https://via.placeholder.com/150" className="d-none d-md-block" />
             <Card.Body>
               <Card.Title>Total $ Available</Card.Title>
-              <Card.Text>$15,000</Card.Text>
+              <Card.Text>{userInfo.money}</Card.Text>
             </Card.Body>
           </Card>
           <Card>
@@ -67,7 +92,6 @@ const OverviewPage = () => {
         </Col>
       </Row>
     </Container>
-  );
-};
+  ); };
 
 export default OverviewPage;
