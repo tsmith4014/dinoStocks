@@ -3,9 +3,13 @@ from rest_framework.response import Response
 from .models import Shares
 from .serializers import SharesSerializer
 from realstonks_app.models import StockMarket
+from rest_framework.status import (
+    HTTP_201_CREATED,
+    HTTP_204_NO_CONTENT,
+    HTTP_400_BAD_REQUEST,
+    HTTP_404_NOT_FOUND,
+)
 
-
-# Create your views here.
 class All_Stocks_Shares(APIView):
     def get(self, request):
         try:
@@ -18,11 +22,15 @@ class All_Stocks_Shares(APIView):
             return Response(False)
 
     def post(self, request):
+        """User Buys Shares"""
         try:
             portfolio = request.user.portfolio
             ticker = request.data.get("ticker")
             shares = request.data.get("shares")
             current_stock_data = StockMarket.objects.get(ticker=ticker)
+            price = shares * current_stock_data.price
+            if price > portfolio.money:
+                return Response("Insufficient funds.", status=HTTP_204_NO_CONTENT)
             new_shares = Shares.objects.create(
                 portfolio=portfolio,
                 ticker=ticker,
@@ -31,15 +39,77 @@ class All_Stocks_Shares(APIView):
                 dino_name=current_stock_data.name,
                 dino_ticker=current_stock_data.dino_ticker,
             )
-            portfolio.money -= shares * current_stock_data.price
+            portfolio.money -= price
             portfolio.save()
             print(new_shares)
             return Response(SharesSerializer(new_shares).data)
         except:
             print("Didn't work")
-            return Response(False)
+            return Response(False, status=HTTP_400_BAD_REQUEST)
 
 
 class Single_Stock_Shares(APIView):
     def get(self, request, shares_id):
-        pass
+        try:
+            single_stock = Shares.objects.get(id=shares_id)
+            serializer = SharesSerializer(single_stock)
+            return Response(serializer.data, status=HTTP_204_NO_CONTENT)
+        except:
+            return Response("Shares_id doesn't exist", status=HTTP_404_NOT_FOUND)
+        
+    def delete(self, request,shares_id):
+        """Sell all shares"""
+        try:
+            portfolio = request.user.portfolio
+            single_stock = portfolio.shares.get(id=shares_id)
+            current_price = StockMarket.objects.get(ticker=single_stock.ticker).price
+            print(current_price * single_stock.shares, portfolio.money)
+            portfolio.money += current_price*single_stock.shares
+            portfolio.save()
+            single_stock.delete()
+            return Response(
+                f"{current_price*single_stock.shares} has been added to your account. Total: {portfolio.money}",
+                status=HTTP_204_NO_CONTENT
+            )
+        except:
+            return Response("Shares_id doesn't exist", status=HTTP_400_BAD_REQUEST)
+        
+    def put (self,request, shares_id):
+        """Sell or buy some shares user already owns"""
+        try:
+            portfolio = request.user.portfolio
+            single_stock = portfolio.shares.get(id=shares_id)
+            current_price = StockMarket.objects.get(ticker=single_stock.ticker).price
+            buy = request.data.get("buy")
+            shares = request.data.get("shares")
+            if buy:
+                total = current_price * shares
+                if total <= portfolio.money:
+                    portfolio.money -= total
+                    portfolio.save()
+                    single_stock.shares += shares
+                    single_stock.save()
+                else:
+                    return Response("Insufficient funds.", status=HTTP_204_NO_CONTENT)
+            else:
+                if shares >= single_stock.shares:
+                    total = current_price * single_stock.shares
+                    portfolio.money += total
+                    portfolio.save()
+                    single_stock.delete()
+                    return Response(
+                        f"Transaction complete. All shares sold. Money:{portfolio.money}",
+                        status=HTTP_204_NO_CONTENT
+                    )
+                else:
+                    total = current_price * shares
+                    portfolio.money += total
+                    portfolio.save()
+                    single_stock.shares -= shares
+                    single_stock.save()
+            return Response(
+                f"Transaction complete. Current Shares: {single_stock.shares} Money:{portfolio.money}",
+                status=HTTP_204_NO_CONTENT
+                )
+        except:
+            return Response("Error handling transaction.", status=HTTP_400_BAD_REQUEST)
