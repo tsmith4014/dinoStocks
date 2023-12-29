@@ -33,7 +33,7 @@ const router = createBrowserRouter([
                 element: <SignUpPage />
             },
             {
-                path: "stock/:id/",
+                path: "market/stock/:id/",
                 element: <StockDetailPage />
             }
 

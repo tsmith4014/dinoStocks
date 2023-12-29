@@ -13,6 +13,6 @@ class PortfolioInfo(APIView):
         try:
             portfolio_obj = PortfolioSerializer(request.user.portfolio)
             print(portfolio_obj.data)
-            return Response(portfolio_obj.data, status=HTTP_204_NO_CONTENT)
+            return Response(portfolio_obj.data)
         except:
             return Response("portfolio not found", status=HTTP_404_NOT_FOUND)
