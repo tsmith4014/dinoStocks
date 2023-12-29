@@ -13,7 +13,7 @@ const LogIn = ({ setUser }) => {
     const login = async (e) => {
         e.preventDefault();
         try {
-            const response = await userAPI.post("LogIn/", {
+            let response = await userAPI.post("LogIn/", {
                 email: email,
                 password: password,
             });
