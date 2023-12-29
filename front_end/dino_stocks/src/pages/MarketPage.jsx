@@ -20,8 +20,9 @@ const [data,setData]=useState([])
     fetchStockData();
   }, []); 
    
-   console.log(data)
   
+  
+
 
   return (
     <Container fluid>
@@ -40,7 +41,7 @@ const [data,setData]=useState([])
         <tbody>
           {data && data.map((stock, index) => (
             <tr key={index}>
-              <td>{stock.name}</td>
+              <Link to={`stock/${stock.id}/`}><td>{stock.name}</td></Link>
               <td>{stock.dino_ticker}</td>
               <td>${stock.price}</td>
               <td className={stock.change_point.startsWith('-') ? 'text-danger' : 'text-success'}>

@@ -17,7 +17,7 @@ class All_Stocks_Shares(APIView):
             portfolio = request.user.portfolio
             shares = portfolio.shares.all()
             ser_shares = SharesSerializer(shares, many=True)
-            return Response(ser_shares.data, status=HTTP_204_NO_CONTENT)
+            return Response(ser_shares.data)
         except:
             print("didn't work")
             return Response("data not found", status=HTTP_404_NOT_FOUND)
@@ -54,7 +54,7 @@ class Single_Stock_Shares(APIView):
         try:
             single_stock = Shares.objects.get(id=shares_id)
             serializer = SharesSerializer(single_stock)
-            return Response(serializer.data, status=HTTP_204_NO_CONTENT)
+            return Response(serializer.data)
         except:
             return Response("Shares_id doesn't exist", status=HTTP_404_NOT_FOUND)
 

@@ -17,6 +17,6 @@ class HistoricalInfo(APIView):
                 "time_stamp"
             )
             ser_historicals = HistoricalSerializer(historicals, many=True)
-            return Response(ser_historicals.data, status=HTTP_204_NO_CONTENT)
+            return Response(ser_historicals.data)
         except:
             return Response("Historical data not found", status=HTTP_404_NOT_FOUND)

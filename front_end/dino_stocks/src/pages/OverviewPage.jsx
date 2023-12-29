@@ -20,6 +20,7 @@ const [userInfo, setUserInfo]= useState([])
           Authorization:`Token ${token}`
         }
       })
+      console.log(response)
       setUserInfo(response.data)
   } catch (error) {
     console.error("Error fetching portfolio:", error);
@@ -33,6 +34,10 @@ const [userInfo, setUserInfo]= useState([])
   
     fetchData();
   }, []); 
+
+
+
+
    
 console.log(userInfo)
   return (
@@ -73,16 +78,16 @@ console.log(userInfo)
                 <thead>
                   <tr>
                     <th>Stock</th>
-                    <th>Details</th>
-                    <th>Price</th>
+                    <th>Shares</th>
+                    <th>Purchase Price</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {mockStockData.map((stock, index) => (
+                  {userInfo.shares && userInfo.shares.map((stock, index) => (
                     <tr key={index}>
-                      <td>{stock.stock}</td>
-                      <td>{stock.details}</td>
-                      <td>{stock.price}</td>
+                      <td>{stock.dino_name}</td>
+                      <td>{stock.shares}</td>
+                      <td>{stock.price_at_purchase*stock.shares}</td>
                     </tr>
                   ))}
                 </tbody>
