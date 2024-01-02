@@ -28,9 +28,9 @@ const HomePage = () => {
                 <Card className="h-100">
                   <Card.Img variant="top" src="https://picsum.photos/300/200" />
                   <Card.Body>
-                    <Card.Title>Feature 1</Card.Title>
+                    <Card.Title>Buy and Sell Shares of Dinosaurs</Card.Title>
                     <Card.Text>
-                      insert info here
+                      Our park currently has 20 different dinosaurs to invest in. Choose which dinosaurs you think will bring in the highest returns, strategically buying and selling shares to maximize your profits. From the mighty T-Rex to the swift Velociraptor, each dinosaur has its own market dynamics, creating an exhilarating experience as you navigate the evolving landscape of our dino-themed stock market. The choice is yours at DinoStocks – invest wisely, and let the roar of financial success echo through the Jurassic era!
                     </Card.Text>
                   </Card.Body>
                 </Card>
@@ -39,8 +39,9 @@ const HomePage = () => {
                 <Card className="h-100">
                   <Card.Img variant="top" src="https://picsum.photos/300/200" />
                   <Card.Body>
-                    <Card.Title>Feature 2</Card.Title>
-                    <Card.Text>insert info here</Card.Text>
+                    <Card.Title>Watch Your Portfolio</Card.Title>
+                    <Card.Text>
+                      Observe the impact of your financial decisions as you track the growth or fluctuations of your dino-themed portfolio at DinoStocks. Our hourly updates provide insights into how your investment strategies shape the value of your shares. Whether your portfolio is soaring to new heights or facing a temporary dip, the dynamic nature of the market keeps the excitement alive. Keep a close eye on your investments, adjust your strategies on the fly, and experience the exhilarating journey of watching your dino-centric portfolio evolve throughout the day. At DinoStocks, every hourly rise and fall is a thrilling part of the financial adventure!</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
@@ -48,8 +49,9 @@ const HomePage = () => {
                 <Card className="h-100">
                   <Card.Img variant="top" src="https://picsum.photos/300/200" />
                   <Card.Body>
-                    <Card.Title>Feature 3</Card.Title>
-                    <Card.Text>insert info here</Card.Text>
+                    <Card.Title>Visit the Dino Market</Card.Title>
+                    <Card.Text>
+                      Embark on a journey through DinoStocks' dynamic stock market, featuring 20 diverse dinosaurs, including the majestic Pterodactyl and the melodic Parasaurolophus. Our user-friendly interface provides real-time insights into pricing, change percentages, and point variations for every dino share in your portfolio. Stay tuned to the market dynamics, seize opportunities, and strategize your trades as you navigate the ever-evolving landscape of our prehistoric stock exchange. With a quick glance, you can assess the performance of each unique dinosaur, empowering you to make informed decisions and maximize your investment potential in this thrilling dino-themed financial adventure.</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
