@@ -1,0 +1,22 @@
+.custom-tooltip {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.tooltip-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.tooltip-value-0 {
+    color: #8884d8;
+    /* Color for the first data series */
+}
+
+.tooltip-value-1 {
+    color: #82ca9d;
+    /* Color for the second data series */
+}

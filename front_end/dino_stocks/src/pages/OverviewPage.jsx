@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card, Table } from 'react-bootstrap';
+import { Container, Row, Col, Card, Table, Button } from 'react-bootstrap';
 import PortfolioLineChart from '../components/PortfolioLineChart';
 import axios from 'axios';
 import { userAPI } from '../utilities';
 
 const OverviewPage = () => {
   const [userInfo, setUserInfo] = useState([])
+  const [portfolioData, setPortfolioData] = useState([])
+  const [dailyAveragePortfolio, setDailyAveragePortfolio] = useState([])
+  const [showDaily, setShowDaily] = useState(true)
 
   const mockStockData = [
     { stock: 'Dino Corp', details: '20 shares @ $50', price: '$1000' },
@@ -13,50 +16,7 @@ const OverviewPage = () => {
     { stock: 'Prehistoric Inc', details: '5 shares @ $120', price: '$600' },
   ];
 
-  const data = [
-    {
-      "name": "Page A",
-      "uv": 4000,
-      "pv": 2400,
-      "amt": 2400
-    },
-    {
-      "name": "Page B",
-      "uv": 3000,
-      "pv": 1398,
-      "amt": 2210
-    },
-    {
-      "name": "Page C",
-      "uv": 2000,
-      "pv": 9800,
-      "amt": 2290
-    },
-    {
-      "name": "Page D",
-      "uv": 2780,
-      "pv": 3908,
-      "amt": 2000
-    },
-    {
-      "name": "Page E",
-      "uv": 1890,
-      "pv": 4800,
-      "amt": 2181
-    },
-    {
-      "name": "Page F",
-      "uv": 2390,
-      "pv": 3800,
-      "amt": 2500
-    },
-    {
-      "name": "Page G",
-      "uv": 3490,
-      "pv": 4300,
-      "amt": 2100
-    }
-  ]
+
 
   const fetchPortfolio = async () => {
     let token = localStorage.getItem("token")
@@ -67,8 +27,39 @@ const OverviewPage = () => {
             Authorization: `Token ${token}`
           }
         })
-        console.log(response)
         setUserInfo(response.data)
+
+        // Group data by date
+        const groupedData = response.data.historicals.reduce((result, entry) => {
+          const date = entry.time_stamp.split('T')[0];
+          if (!result[date]) {
+            result[date] = [];
+          }
+          result[date].push(entry);
+          return result;
+        }, {});
+
+        // Calculate daily averages
+        const dailyAverages = Object.keys(groupedData).map((date) => {
+          const entries = groupedData[date];
+          const totalPortfolioValue = entries.reduce((sum, entry) => sum + parseFloat(entry.portfolio_value), 0);
+          const portfolio_value = (totalPortfolioValue / entries.length).toFixed(2);
+
+          return {
+            date,
+            portfolio_value
+          };
+        });
+
+
+
+
+        const transformedData = response.data.historicals.map(({ time_stamp, portfolio_value }) => ({
+          date: time_stamp,
+          portfolio_value,
+        }));
+        setPortfolioData(transformedData)
+        setDailyAveragePortfolio(dailyAverages)
       } catch (error) {
         console.error("Error fetching portfolio:", error);
       }
@@ -84,10 +75,11 @@ const OverviewPage = () => {
   }, []);
 
 
+  const handleToggleChart = () => {
+    setShowDaily((prevShowDailyAverage) => !prevShowDailyAverage);
+  };
 
 
-
-  console.log(userInfo)
   return (
     <Container fluid>
       <Row className="my-4">
@@ -112,10 +104,14 @@ const OverviewPage = () => {
         <Col md={9}>
           <Card className="mb-3">
             <Card.Body>
-              <Card.Title>Graph with Portfolio Performance</Card.Title>
-              {/* Placeholder for graph component */}
+              <Card.Title>Portfolio Performance      <Button onClick={handleToggleChart} variant="primary">
+                {showDaily ? 'Time Stamp' : 'Daily Average'}
+              </Button></Card.Title>
+
               <div >
-                <PortfolioLineChart data={data} />
+
+                {showDaily ? <PortfolioLineChart data={dailyAveragePortfolio} /> : <PortfolioLineChart data={portfolioData} />}
+
               </div>
             </Card.Body>
           </Card>
