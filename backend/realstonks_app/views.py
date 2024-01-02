@@ -18,14 +18,14 @@ class RealStonks(APIView):
             return Response(stocks.data)
         except:
             return Response(status=HTTP_404_NOT_FOUND)
-        
+
+
 class SingleStock(APIView):
     def get(self, request, stock_id):
         print(stock_id)
         try:
-            stock=StockMarketSerializer(StockMarket.objects.get(id=stock_id))
+            stock = StockMarketSerializer(StockMarket.objects.get(id=stock_id))
             print(stock)
             return Response(stock.data)
         except:
             return Response(status=HTTP_404_NOT_FOUND)
-
