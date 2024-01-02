@@ -1,27 +1,52 @@
 import React from 'react';
 import { Container, Table } from 'react-bootstrap';
 import axios from 'axios';
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+const dinoImages = {
+  "MICRO": "/microraptorcute.jpg",
+  "PACHY": "/pachy.jpg",
+  "CORY": "/cory.jpg",
+  "PTERO": "/ptera.jpg",
+  "PLESI": "/pleis.jpg",
+  "DILO": "/dilop.jpg",
+  "IGUA": "/iguanadon2.jpg",
+  "PARA": "/Parasaurolophus.jpg",
+  "TRI": "/tricera.jpg",
+  "VELO": "/veloc.jpg",
+  "SPINO": "/spino.jpg",
+  "DEINO": "/Deinonychus.jpg",
+  "TREX": "/trex2.jpg",
+  "BRACH": "/brachia.jpg",
+  "ARCH": "/Archaeopteryx.jpg",
+  "ALLO": "/Allosaurus.jpg",
+  "STEGO": "/stego.jpg",
+  "APTO": "/Apatosaurus.jpg",
+  "CARNO": "/Carnotaurus.jpg",
+  "ANKY": "/Ankylosaurus.jpg"
+}
+
+
 const MarketPage = () => {
-const [data,setData]=useState([])
+  const [data, setData] = useState([])
 
 
-  const fetchStockData = async ()=>{
-      try {
+  const fetchStockData = async () => {
+    try {
       let response = await axios.get(`http://127.0.0.1:8000/api/v1/stockmarket/`)
       setData(response.data)
-      }
-   catch (error) {
-    console.error("Error fetching portfolio:", error);
-  }}
+    }
+    catch (error) {
+      console.error("Error fetching portfolio:", error);
+    }
+  }
   useEffect(() => {
     fetchStockData();
-  }, []); 
-   
-  
-  
+  }, []);
+
+
+
 
 
   return (
@@ -30,7 +55,7 @@ const [data,setData]=useState([])
       <Table striped bordered hover responsive>
         <thead>
           <tr>
-            <th>Company Name</th>
+            <th>Dinosaur</th>
             <th>Symbol</th>
             <th>Price</th>
             <th>Change</th>
@@ -41,7 +66,7 @@ const [data,setData]=useState([])
         <tbody>
           {data && data.map((stock, index) => (
             <tr key={index}>
-              <Link to={`stock/${stock.id}/`}><td>{stock.name}</td></Link>
+              <td>{dinoImages[stock.dino_ticker] && <img className='marketImage' src={dinoImages[stock.dino_ticker]} />} <Link to={`stock/${stock.id}/`}>{stock.name}</Link> </td>
               <td>{stock.dino_ticker}</td>
               <td>${stock.price}</td>
               <td className={stock.change_point.startsWith('-') ? 'text-danger' : 'text-success'}>
