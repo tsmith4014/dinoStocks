@@ -105,7 +105,7 @@ const OverviewPage = () => {
           <Card className="mb-3">
             <Card.Body>
               <Card.Title>Portfolio Performance      <Button onClick={handleToggleChart} variant="primary">
-                {showDaily ? 'Time Stamp' : 'Daily Average'}
+                {showDaily ? 'Show Hourly' : 'Show Daily'}
               </Button></Card.Title>
 
               <div >
