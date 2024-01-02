@@ -26,7 +26,7 @@ const HomePage = () => {
             <Row className="d-flex align-items-stretch">
               <Col>
                 <Card className="h-100">
-                  <Card.Img variant="top" src="https://picsum.photos/300/200" />
+                  <Card.Img variant="top" src="/stockmarket.jpg" />
                   <Card.Body>
                     <Card.Title>Buy and Sell Shares of Dinosaurs</Card.Title>
                     <Card.Text>
@@ -37,7 +37,7 @@ const HomePage = () => {
               </Col>
               <Col>
                 <Card className="h-100">
-                  <Card.Img variant="top" src="https://picsum.photos/300/200" />
+                  <Card.Img variant="top" src="/chart.png" />
                   <Card.Body>
                     <Card.Title>Watch Your Portfolio</Card.Title>
                     <Card.Text>
@@ -47,7 +47,7 @@ const HomePage = () => {
               </Col>
               <Col>
                 <Card className="h-100">
-                  <Card.Img variant="top" src="https://picsum.photos/300/200" />
+                  <Card.Img variant="top" src="/buystocks.jpg" />
                   <Card.Body>
                     <Card.Title>Visit the Dino Market</Card.Title>
                     <Card.Text>
