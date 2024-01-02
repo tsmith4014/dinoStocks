@@ -1,27 +1,28 @@
 import React from 'react';
 import { Container, Table } from 'react-bootstrap';
 import axios from 'axios';
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const MarketPage = () => {
-const [data,setData]=useState([])
+  const [data, setData] = useState([])
 
 
-  const fetchStockData = async ()=>{
-      try {
+  const fetchStockData = async () => {
+    try {
       let response = await axios.get(`http://127.0.0.1:8000/api/v1/stockmarket/`)
       setData(response.data)
-      }
-   catch (error) {
-    console.error("Error fetching portfolio:", error);
-  }}
+    }
+    catch (error) {
+      console.error("Error fetching portfolio:", error);
+    }
+  }
   useEffect(() => {
     fetchStockData();
-  }, []); 
-   
-  
-  
+  }, []);
+
+
+
 
 
   return (
