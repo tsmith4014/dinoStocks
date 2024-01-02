@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, Table, Button } from 'react-bootstrap';
 import PortfolioLineChart from '../components/PortfolioLineChart';
 import axios from 'axios';
 import TransactionModal from '../components/TransactionModal';
+import { useOutletContext, useParams } from 'react-router-dom';
 
 const OverviewPage = () => {
   const [userInfo, setUserInfo] = useState([])
@@ -15,7 +16,9 @@ const OverviewPage = () => {
   const token = localStorage.getItem("token");
   const [transactionType, setTransactionType] = useState('buy');
   const [modalTitle, setModalTitle] = useState('Buy Shares');
-
+  const [image,setImage]=useState("")
+  const {portfolioValue}=useOutletContext()
+  const [levelTitle,setLevelTitle]= useState("")
 
   // Function to handle buying shares
   // If the stock is already owned, pass the share ID for PUT request
@@ -92,6 +95,7 @@ const OverviewPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       await fetchPortfolio();
+      imageSelector()
     };
 
     fetchData();
@@ -102,14 +106,44 @@ const OverviewPage = () => {
     setShowDaily((prevShowDailyAverage) => !prevShowDailyAverage);
   };
 
+  const imageSelector = () =>{
+    console.log(portfolioValue)
+    if (portfolioValue <= 10000 && portfolioValue<50000){
+      setImage("/Velociraptor.png")
+      setLevelTitle("Velociraptor")
+    }
+    if (portfolioValue >=50000 && portfolioValue<100000){
+      setImage("/TriceratopsPFP.png")
+      setLevelTitle("Triceratops")
+    }
+    if (portfolioValue >= 100000 && portfolioValue<250000){
+      setImage("/StegasaurusPFP.png")
+      setLevelTitle("Stegasaurus")
+    }
+    if (portfolioValue >= 250000 && portfolioValue<500000){
+      setImage("/SpinosaurusPFP.png")
+      setLevelTitle("Spinosaurus")
+    }
+    if (portfolioValue >= 500000 && portfolioValue<1000000){
+      setImage("/T-RexPFP.png")
+      setLevelTitle("T-Rex")
+    }
+    if (portfolioValue >= 1000000){
+      setImage("/BrachiosaurusPFP.png")
+      setLevelTitle("Brachiosaurus")
+    }
+  }
+
+
 
   return (
     <Container fluid>
       <Row className="my-4">
         <Col md={3}>
           <Card className="mb-3">
-            <Card.Img variant="top" src="https://via.placeholder.com/150" className="d-none d-md-block" />
+            <Card.Img variant="top" src={image} className="d-none d-md-block" />
             <Card.Body>
+              <Card.Title>Level : {levelTitle}</Card.Title>
               <Card.Title>Total $ Available</Card.Title>
               <Card.Text>{userInfo.money}</Card.Text>
             </Card.Body>
