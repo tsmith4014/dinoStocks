@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { Navbar, Nav, Container, Button, NavItem } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import { userAPI } from "../utilities";
@@ -15,8 +16,9 @@ const NavBar = ({ user, setUser, buyingPower, portfolioValue }) => {
     }
   };
 
+
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand="lg" >
       <Container fluid>
         <Navbar.Brand as={Link} to="/">
           <img
@@ -32,7 +34,7 @@ const NavBar = ({ user, setUser, buyingPower, portfolioValue }) => {
             <Nav.Link as={Link} to="/market">Market</Nav.Link>
             <Nav.Link as={Link} to="/overview">Overview</Nav.Link>
           </Nav>
-          {user ? (
+          {portfolioValue ? (
             <div className="user_info">
               <Navbar.Text>Portfolio Value: ${portfolioValue}</Navbar.Text>
               <Navbar.Text>Buying Power: ${buyingPower}</Navbar.Text>
@@ -48,7 +50,7 @@ const NavBar = ({ user, setUser, buyingPower, portfolioValue }) => {
           )}
         </Navbar.Collapse>
       </Container>
-    </Navbar>
+    </Navbar >
   );
 };
 
