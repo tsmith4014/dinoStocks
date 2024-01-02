@@ -17,24 +17,24 @@ const OverviewPage = () => {
   const [modalTitle, setModalTitle] = useState('Buy Shares');
 
 
-// Function to handle buying shares
-// If the stock is already owned, pass the share ID for PUT request
-// If the stock is not owned, pass the ticker symbol for POST request
-const handleBuy = (idOrTicker, alreadyOwned) => {
-  setSelectedShareId(idOrTicker);
-  setIsOwned(alreadyOwned);
-  setTransactionType('buy');
-  setModalTitle('Buy Shares');
-  setShowModal(true);
-};
+  // Function to handle buying shares
+  // If the stock is already owned, pass the share ID for PUT request
+  // If the stock is not owned, pass the ticker symbol for POST request
+  const handleBuy = (idOrTicker, alreadyOwned) => {
+    setSelectedShareId(idOrTicker);
+    setIsOwned(alreadyOwned);
+    setTransactionType('buy');
+    setModalTitle('Buy Shares');
+    setShowModal(true);
+  };
 
 
   // Function to handle selling shares
   const handleSell = (shareId) => {
     setSelectedShareId(shareId);
     setIsOwned(true);
-    setTransactionType('sell'); 
-    setModalTitle('Sell Shares'); 
+    setTransactionType('sell');
+    setModalTitle('Sell Shares');
     setShowModal(true);
   };
 
@@ -79,6 +79,8 @@ const handleBuy = (idOrTicker, alreadyOwned) => {
           date: time_stamp,
           portfolio_value,
         }));
+
+
         setPortfolioData(transformedData)
         setDailyAveragePortfolio(dailyAverages)
       } catch (error) {
@@ -173,15 +175,15 @@ const handleBuy = (idOrTicker, alreadyOwned) => {
         </Col>
       </Row>
       <TransactionModal
-      show={showModal}
-      handleClose={() => setShowModal(false)}
-      shareId={selectedShareId}
-      fetchPortfolio={fetchPortfolio}
-      token={token}
-      isOwned={isOwned}
-      transactionType={transactionType}
-      modalTitle={modalTitle}
-    />
+        show={showModal}
+        handleClose={() => setShowModal(false)}
+        shareId={selectedShareId}
+        fetchPortfolio={fetchPortfolio}
+        token={token}
+        isOwned={isOwned}
+        transactionType={transactionType}
+        modalTitle={modalTitle}
+      />
     </Container>
   );
 };
