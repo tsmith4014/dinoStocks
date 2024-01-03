@@ -35,7 +35,7 @@ const NavBar = ({ user, setUser, buyingPower, portfolioValue }) => {
             <Nav.Link as={Link} to="/market">Market</Nav.Link>
             <Nav.Link as={Link} to="/overview">Overview</Nav.Link>
           </Nav>
-          {portfolioValue ? (
+          {user ? (
             <div className="user_info">
               <Navbar.Text>Portfolio Value: ${portfolioValue}</Navbar.Text>
               <Navbar.Text>Buying Power: ${buyingPower}</Navbar.Text>
