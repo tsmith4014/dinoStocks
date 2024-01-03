@@ -4,12 +4,12 @@ from .models import Shares
 from .serializers import SharesSerializer
 from realstonks_app.models import StockMarket
 from rest_framework.status import (
+    HTTP_200_OK,
     HTTP_201_CREATED,
     HTTP_204_NO_CONTENT,
     HTTP_400_BAD_REQUEST,
     HTTP_404_NOT_FOUND,
 )
-
 
 class All_Stocks_Shares(APIView):
     def get(self, request):
@@ -27,26 +27,34 @@ class All_Stocks_Shares(APIView):
         try:
             portfolio = request.user.portfolio
             ticker = request.data.get("ticker")
-            shares = request.data.get("shares")
+            shares = int(request.data.get("shares", 0))
             current_stock_data = StockMarket.objects.get(ticker=ticker)
             price = shares * current_stock_data.price
             if price > portfolio.money:
                 return Response("Insufficient funds.", status=HTTP_204_NO_CONTENT)
-            new_shares = Shares.objects.create(
-                portfolio=portfolio,
-                ticker=ticker,
-                shares=shares,
-                price_at_purchase=current_stock_data.price,
-                dino_name=current_stock_data.name,
-                dino_ticker=current_stock_data.dino_ticker,
-            )
-            portfolio.money -= price
-            portfolio.save()
-            print(new_shares)
-            return Response(SharesSerializer(new_shares).data, status=HTTP_201_CREATED)
-        except:
-            print("Didn't work")
-            return Response(False, status=HTTP_400_BAD_REQUEST)
+            existing_shares = Shares.objects.filter(portfolio=portfolio, ticker=ticker).first()
+            if existing_shares:
+                # Update existing shares
+                existing_shares.shares += shares
+                existing_shares.save()
+                return Response(SharesSerializer(existing_shares).data, status=HTTP_200_OK)
+            else:
+                # Create new shares
+                new_shares = Shares.objects.create(
+                    portfolio=portfolio,
+                    ticker=ticker,
+                    shares=shares,
+                    price_at_purchase=current_stock_data.price,
+                    dino_name=current_stock_data.name,
+                    dino_ticker=current_stock_data.dino_ticker,
+                )
+                portfolio.money -= price
+                portfolio.save()
+                print(new_shares)
+                return Response(SharesSerializer(new_shares).data, status=HTTP_201_CREATED)
+        except Exception as e:
+            print(f"Error: {str(e)}")
+            return Response({"error": str(e)}, status=HTTP_400_BAD_REQUEST)
 
 
 class Single_Stock_Shares(APIView):
@@ -81,8 +89,9 @@ class Single_Stock_Shares(APIView):
             portfolio = request.user.portfolio
             single_stock = portfolio.shares.get(id=shares_id)
             current_price = StockMarket.objects.get(ticker=single_stock.ticker).price
+            print("Type of current_price:", type(current_price))
             buy = request.data.get("buy")
-            shares = request.data.get("shares")
+            shares = int(request.data.get("shares", 0))
             if buy:
                 total = current_price * shares
                 if total <= portfolio.money:
@@ -112,5 +121,6 @@ class Single_Stock_Shares(APIView):
                 f"Transaction complete. Current Shares: {single_stock.shares} Money:{portfolio.money}",
                 status=HTTP_204_NO_CONTENT,
             )
-        except:
-            return Response("Error handling transaction.", status=HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response(f"Error handling transaction: {str(e)}", status=HTTP_400_BAD_REQUEST)
+
