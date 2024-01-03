@@ -1,33 +1,57 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Table, Button } from 'react-bootstrap';
 import PortfolioLineChart from '../components/PortfolioLineChart';
 import axios from 'axios';
-import { userAPI } from '../utilities';
+import TransactionModal from '../components/TransactionModal';
 
 const OverviewPage = () => {
   const [userInfo, setUserInfo] = useState([])
   const [portfolioData, setPortfolioData] = useState([])
   const [dailyAveragePortfolio, setDailyAveragePortfolio] = useState([])
   const [showDaily, setShowDaily] = useState(true)
+  const [showModal, setShowModal] = useState(false);
+  const [selectedShareId, setSelectedShareId] = useState(null);
+  const [isOwned, setIsOwned] = useState(false);
+  const token = localStorage.getItem("token");
+  const [transactionType, setTransactionType] = useState('buy');
+  const [modalTitle, setModalTitle] = useState('Buy Shares');
 
-  const mockStockData = [
-    { stock: 'Dino Corp', details: '20 shares @ $50', price: '$1000' },
-    { stock: 'Jurassic Ventures', details: '10 shares @ $80', price: '$800' },
-    { stock: 'Prehistoric Inc', details: '5 shares @ $120', price: '$600' },
-  ];
+
+// Function to handle buying shares
+// If the stock is already owned, pass the share ID for PUT request
+// If the stock is not owned, pass the ticker symbol for POST request
+const handleBuy = (idOrTicker, alreadyOwned) => {
+  setSelectedShareId(idOrTicker);
+  setIsOwned(alreadyOwned);
+  setTransactionType('buy');
+  setModalTitle('Buy Shares');
+  setShowModal(true);
+};
 
 
+  // Function to handle selling shares
+  const handleSell = (shareId) => {
+    setSelectedShareId(shareId);
+    setIsOwned(true);
+    setTransactionType('sell'); 
+    setModalTitle('Sell Shares'); 
+    setShowModal(true);
+  };
 
   const fetchPortfolio = async () => {
-    let token = localStorage.getItem("token")
     if (token) {
       try {
         let response = await axios.get(`http://127.0.0.1:8000/api/v1/portfolio/`, {
-          headers: {
-            Authorization: `Token ${token}`
-          }
-        })
-        setUserInfo(response.data)
+          headers: { Authorization: `Token ${token}` }
+        });
+
+        // Add 'alreadyOwned' property to each share
+        const updatedShares = response.data.shares.map(share => ({
+          ...share,
+          alreadyOwned: true
+        }));
+
+        setUserInfo({ ...response.data, shares: updatedShares });
 
         // Group data by date
         const groupedData = response.data.historicals.reduce((result, entry) => {
@@ -50,9 +74,6 @@ const OverviewPage = () => {
             portfolio_value
           };
         });
-
-
-
 
         const transformedData = response.data.historicals.map(({ time_stamp, portfolio_value }) => ({
           date: time_stamp,
@@ -127,6 +148,7 @@ const OverviewPage = () => {
                     <th>Purchase Price</th>
                     <th>Change</th>
                     <th>Current Value</th>
+                    <th>Buy / Sell</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -138,6 +160,10 @@ const OverviewPage = () => {
                       <td>{stock.price_at_purchase}</td>
                       <td className={(stock.current_price - stock.price_at_purchase).toFixed(2).startsWith('-') ? 'text-danger' : 'text-success'}> {(stock.current_price - stock.price_at_purchase).toFixed(2).startsWith('-') ? '↓' : '↑'}{(stock.current_price - stock.price_at_purchase).toFixed(2)}</td>
                       <td>{(stock.current_price * stock.shares).toFixed(2)}</td>
+                      <td>
+                        <Button onClick={() => handleBuy(stock.alreadyOwned ? stock.id : stock.ticker, stock.alreadyOwned)} variant="success">Buy More</Button>
+                        <Button onClick={() => handleSell(stock.id, true)} variant="danger">Sell</Button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -146,6 +172,16 @@ const OverviewPage = () => {
           </Card>
         </Col>
       </Row>
+      <TransactionModal
+      show={showModal}
+      handleClose={() => setShowModal(false)}
+      shareId={selectedShareId}
+      fetchPortfolio={fetchPortfolio}
+      token={token}
+      isOwned={isOwned}
+      transactionType={transactionType}
+      modalTitle={modalTitle}
+    />
     </Container>
   );
 };

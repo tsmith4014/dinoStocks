@@ -1,8 +1,8 @@
-import React from 'react';
-import { Container, Table } from 'react-bootstrap';
+import { Container, Table, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import TransactionModal from '../components/TransactionModal';
 
 const dinoImages = {
   "MICRO": "/microraptorcute.jpg",
@@ -30,6 +30,13 @@ const dinoImages = {
 
 const MarketPage = () => {
   const [data, setData] = useState([])
+  const [showModal, setShowModal] = useState(false);
+  const [selectedStock, setSelectedStock] = useState(null);
+  const token = localStorage.getItem("token");
+  const [userInfo, setUserInfo] = useState({});
+  const [isOwned, setIsOwned] = useState(false);
+  const [selectedShareId, setSelectedShareId] = useState(null);
+
 
 
   const fetchStockData = async () => {
@@ -45,9 +52,35 @@ const MarketPage = () => {
     fetchStockData();
   }, []);
 
+  const handleBuyClick = (stock) => {
+    // Determine if the user already owns this stock and get its ID
+    const ownedShare = userInfo.shares.find(share => share.ticker === stock.ticker);
+  
+    setSelectedStock(stock);
+    setIsOwned(!!ownedShare); // Set isOwned based on user's ownership
+    setSelectedShareId(ownedShare?.id || null); // Pass the ID of the owned share if it exists
+    setShowModal(true);
+  };
+  
 
+  const fetchPortfolio = async () => {
+    if (token) {
+        try {
+            let response = await axios.get(`http://127.0.0.1:8000/api/v1/portfolio/`, {
+                headers: { Authorization: `Token ${token}` }
+            });
 
+            // Update the userInfo state
+            setUserInfo(response.data);
+        } catch (error) {
+            console.error("Error fetching portfolio:", error);
+        }
+    }
+};
 
+useEffect(() => {
+  fetchPortfolio(); // Fetch portfolio data on component mount
+}, []);
 
   return (
     <Container fluid>
@@ -61,6 +94,7 @@ const MarketPage = () => {
             <th>Change</th>
             <th>% Change</th>
             <th>Volume</th>
+            <th>Buy</th>
           </tr>
         </thead>
         <tbody>
@@ -76,10 +110,23 @@ const MarketPage = () => {
                 {stock.change_percentage}
               </td>
               <td>{stock.total_vol}</td>
+              <td>
+                <Button onClick={() => handleBuyClick(stock)} variant="primary">Buy</Button>
+              </td>
             </tr>
           ))}
         </tbody>
       </Table>
+        <TransactionModal
+        show={showModal}
+        handleClose={() => setShowModal(false)}
+        shareId={selectedShareId}
+        fetchPortfolio={fetchPortfolio}
+        token={token}
+        isOwned={isOwned} 
+        transactionType="buy"
+        modalTitle={`Buy ${selectedStock ? selectedStock.name : ''}`}
+      />
     </Container>
   );
 };
