@@ -19,8 +19,7 @@ function App() {
       let response = await userAPI.get("")
       console.log("now has a user")
       setUserData(response.data)
-      setUser(response.data.username)
-      setLoading(false)
+      setUser(response.data.email)
     }
   }
 
