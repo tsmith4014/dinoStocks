@@ -13,6 +13,7 @@ const NavBar = ({ user, setUser, buyingPower, portfolioValue }) => {
       localStorage.removeItem("token");
       delete userAPI.defaults.headers.common["Authorization"];
     }
+
   };
 
   return (

@@ -32,7 +32,7 @@ function App() {
   return (
     <>
       <NavBar user={user} setUser={setUser} portfolioValue={portfolioValue} buyingPower={buyingPower} />
-      <Outlet context={{ user, setUser }} />
+      <Outlet context={{ user, setUser, portfolioValue }} />
 
     </>
   )
