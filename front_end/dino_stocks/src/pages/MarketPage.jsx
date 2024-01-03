@@ -42,6 +42,7 @@ const MarketPage = () => {
   const fetchStockData = async () => {
     try {
       let response = await axios.get(`http://127.0.0.1:8000/api/v1/stockmarket/`)
+      console.log(response)
       setData(response.data)
     }
     catch (error) {
@@ -53,12 +54,13 @@ const MarketPage = () => {
   }, []);
 
   const handleBuyClick = (stock) => {
+    console.log('buy clicked', stock);
     // Determine if the user already owns this stock and get its ID
     const ownedShare = userInfo.shares.find(share => share.ticker === stock.ticker);
   
     setSelectedStock(stock);
     setIsOwned(!!ownedShare); // Set isOwned based on user's ownership
-    setSelectedShareId(ownedShare?.id || null); // Pass the ID of the owned share if it exists
+    setSelectedShareId(ownedShare?.id || stock.ticker); // Pass the ID of the owned share if it exists
     setShowModal(true);
   };
   
@@ -71,6 +73,7 @@ const MarketPage = () => {
             });
 
             // Update the userInfo state
+            console.log('Portfolio Data:', response.data);
             setUserInfo(response.data);
         } catch (error) {
             console.error("Error fetching portfolio:", error);

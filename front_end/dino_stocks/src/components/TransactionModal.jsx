@@ -7,6 +7,8 @@ const TransactionModal = ({ show, handleClose, shareId, fetchPortfolio, token, i
 
   const handleTransaction = async (e) => {
     e.preventDefault();
+    console.log('Transaction started', { shareId, sharesAmount, isOwned, transactionType });
+    console.log('Form submitted');
     if (token && shareId && sharesAmount > 0) {
       try {
         let endpoint = '';
@@ -29,7 +31,8 @@ const TransactionModal = ({ show, handleClose, shareId, fetchPortfolio, token, i
           method = 'post';
           data = { ticker: shareId, shares: sharesAmount }; 
         }
-  
+        console.log('Transaction method and data:', method, data);
+        
         const response = await axios({
           method: method,
           url: `http://127.0.0.1:8000/api/v1/shares/${endpoint}`,
@@ -39,6 +42,7 @@ const TransactionModal = ({ show, handleClose, shareId, fetchPortfolio, token, i
           }
         });
         console.log("Request Data:", method, endpoint, data);
+        console.log('API Response:', response);
 
         if (response.status === 204 || response.status === 201) {
           // Handle successful transaction
@@ -47,6 +51,7 @@ const TransactionModal = ({ show, handleClose, shareId, fetchPortfolio, token, i
         }
       } catch (error) {
         console.error("Error with transaction:", error.response ? error.response.data : error);
+        alert(`Transaction Error: ${error.response ? error.response.data.error : 'Unknown error'}`);
       }
     }
   };
