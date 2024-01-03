@@ -8,6 +8,7 @@ import { userAPI } from './utilities'
 
 function App() {
   const [user, setUser] = useState(null)
+  const [userData, setUserData] = useState()
   const [portfolioValue, setPortfolioValue] = useState()
   const [buyingPower, setBuyingPower] = useState()
 
@@ -16,21 +17,34 @@ function App() {
     if (token) {
       userAPI.defaults.headers.common["Authorization"] = `Token ${token}`
       let response = await userAPI.get("")
+      console.log("now has a user")
+      setUserData(response.data)
+      setUser(response.data.username)
+      setLoading(false)
+    }
+  }
+
+  const getValues = () => {
+    if (userData) {
       let currentPortfolioValue = 0
-      for (let share of response.data.portfolio.shares) {
+      for (let share of userData.portfolio.shares) {
         currentPortfolioValue += share.current_price * share.shares
       }
       setPortfolioValue(currentPortfolioValue)
-      setBuyingPower(response.data.portfolio.money)
-      setUser(response.data.username)
+      setBuyingPower(userData.portfolio.money)
     }
   }
   useEffect(() => {
     getInfo()
   }, [])
 
+  useEffect(() => {
+    getValues()
+  }, [userData])
+
   return (
     <>
+
       <NavBar user={user} setUser={setUser} portfolioValue={portfolioValue} buyingPower={buyingPower} />
       <Outlet context={{ user, setUser, portfolioValue }} />
 
