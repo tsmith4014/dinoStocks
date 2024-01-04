@@ -34,6 +34,7 @@ const NavBar = ({ user, setUser, buyingPower, portfolioValue }) => {
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/market">Market</Nav.Link>
             <Nav.Link as={Link} to="/overview">Overview</Nav.Link>
+            <Nav.Link as={Link} to="/about">About</Nav.Link>
           </Nav>
           {user ? (
             <div className="user_info">
