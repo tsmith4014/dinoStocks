@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 
-const TransactionModal = ({ show, handleClose, shareId, fetchPortfolio, token, isOwned, transactionType, modalTitle }) => {
+const TransactionModal = ({ show, handleClose, shareId, fetchPortfolio, token, isOwned, transactionType, modalTitle, refreshUserData }) => {
   const [sharesAmount, setSharesAmount] = useState(1);
 
   const handleTransaction = async (e) => {
@@ -48,6 +48,7 @@ const TransactionModal = ({ show, handleClose, shareId, fetchPortfolio, token, i
           // Handle successful transaction
           handleClose();
           fetchPortfolio(); // Refresh the portfolio data
+          refreshUserData();
         }
       } catch (error) {
         console.error("Error with transaction:", error.response ? error.response.data : error);

@@ -12,6 +12,11 @@ function App() {
   const [portfolioValue, setPortfolioValue] = useState()
   const [buyingPower, setBuyingPower] = useState()
 
+  const refreshUserData = async () => {
+    await getInfo(); // This will fetch the latest user data and update userData
+    getValues(); // This will update portfolioValue and buyingPower based on the latest userData
+  };
+
   const getInfo = async () => {
     let token = localStorage.getItem("token")
     if (token) {
@@ -45,7 +50,7 @@ function App() {
     <>
 
       <NavBar user={user} setUser={setUser} portfolioValue={portfolioValue} buyingPower={buyingPower} />
-      <Outlet context={{ user, setUser, portfolioValue }} />
+      <Outlet context={{ user, setUser, portfolioValue, refreshUserData }} />
 
     </>
   )

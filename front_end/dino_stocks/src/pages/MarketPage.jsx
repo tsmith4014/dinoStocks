@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import TransactionModal from '../components/TransactionModal';
+import { useOutletContext } from 'react-router-dom';
 
 const dinoImages = {
   "MICRO": "/microraptorcute.jpg",
@@ -36,6 +37,7 @@ const MarketPage = () => {
   const [userInfo, setUserInfo] = useState({});
   const [isOwned, setIsOwned] = useState(false);
   const [selectedShareId, setSelectedShareId] = useState(null);
+  const {portfolioValue, refreshUserData}=useOutletContext()
 
 
 
@@ -128,6 +130,7 @@ useEffect(() => {
         token={token}
         isOwned={isOwned} 
         transactionType="buy"
+        refreshUserData={refreshUserData}
         modalTitle={`Buy ${selectedStock ? selectedStock.name : ''}`}
       />
     </Container>

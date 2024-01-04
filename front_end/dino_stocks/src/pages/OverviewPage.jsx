@@ -17,7 +17,7 @@ const OverviewPage = () => {
   const [transactionType, setTransactionType] = useState('buy');
   const [modalTitle, setModalTitle] = useState('Buy Shares');
   const [image,setImage]=useState("")
-  const {portfolioValue}=useOutletContext()
+  const {portfolioValue, refreshUserData}=useOutletContext()
   const [levelTitle,setLevelTitle]= useState("")
 
   // Function to handle buying shares
@@ -217,6 +217,7 @@ const OverviewPage = () => {
         isOwned={isOwned}
         transactionType={transactionType}
         modalTitle={modalTitle}
+        refreshUserData={refreshUserData}
       />
     </Container>
   );
