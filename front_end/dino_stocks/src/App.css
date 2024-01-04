@@ -1,69 +1,235 @@
+/* Jurassic Park color theme */
+:root {
+  --jp-dark-green: #006837;
+  --jp-light-green: #2F5233;
+  --jp-yellow: #F3D616;
+  --jp-brown: #A9702C;
+  --jp-red: #A12830;
+  --jp-tan: #F8E9A1;
+}
+
+body {
+  background-color: var(--jp-light-green);
+  color: var(--jp-tan);
+  font-family: Arial, sans-serif;
+}
+
+@font-face {
+  font-family: 'Jurassic';
+  src: url('/fonts/JurassicPark-BL48.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.card {
+  background-color: var(--jp-tan); /* A lighter color from the theme */
+  border-color: var(--jp-brown); /* To maintain the theme's earthy look */
+}
+
+.navbar {
+  background-color: var(--jp-brown); /* Or another color from your theme */
+}
+
+.dino-font {
+  font-family: 'Jurassic', sans-serif;
+  color: var(--jp-yellow); /* Dino font color */
+}
+
+.market-header {
+  font-size: 5rem;
+  color: var(--jp-yellow); /* Market header color */
+}
+
+.text-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 15vh;
+  text-align: center;
+}
+
 .image-overlay-container {
-    position: relative;
-    text-align: center;
-    color: white;
-    border-radius: 0.25rem;
-    overflow: hidden;
-    border: none;
-  }
-  
-  .hero-image-container {
-    position: relative;
-    z-index: 1;
-  
-  }
-  
-  .hero-image-container img {
-    width: 100%;
-    display: block; 
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
-    transition: all .3s ease-in-out;
-  }
-  
-  
-  .overlay-text {
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 3; 
-    color: white;
-  }
-  
+  text-align: center;
+  color: white;
+  border-radius: 0.25rem;
+  overflow: hidden;
+  border: none;
+}
+
+.hero-image-container {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+}
+
+.hero-image-container img {
+  width: 100%;
+  display: block;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+  transition: all .3s ease-in-out;
+}
+
+.overlay-text {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  color: white;
+}
+
+.overlay-text h1 {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-family: 'Jurassic', sans-serif;
+  color: var(--jp-yellow); /* Overlay text color */
+}
+
+#features {
+  padding-top: 1rem;
+}
+
+#features .card {
+  border: none;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+  transition: all .3s ease-in-out;
+}
+
+.LoginContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 200px;
+  height: 300px;
+}
+
+#LoginImage {
+  height: 300px;
+}
+
+#loginButton {
+  width: 150px;
+  margin-left: 120px;
+}
+
+.card {
+  border-width: 2px;
+  border-color: var(--jp-brown); /* Card border color */
+}
+
+/* Apply padding globally to all table cells */
+.table td, .table th {
+  padding: .6rem; /* Adjust padding as needed */
+}
+
+/* Ensure striped styles for theme-table class are applied */
+.theme-table.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: rgba(243, 214, 22, 0.5); /* Light yellow stripes for odd rows */
+}
+
+.table-bordered > :not(caption) > * > * {
+  border-color: var(--jp-brown);
+}
+
+.marketImage {
+  width: auto; /* adjust as needed */
+  height: 50px; /* adjust as needed */
+  margin-right: 10px;
+}
+
+.modal-content {
+  background-color: var(--jp-tan); /* Light background for the modal */
+  color: var(--jp-dark-green); /* Dark text for better readability */
+}
+
+.stock-link {
+  text-decoration: none; /* Removes the underline */
+  color: var(--jp-brown); /* Sets the text color; replace with your desired color variable */
+}
+
+.stock-link:hover {
+  text-decoration: underline; /* Optionally add underline on hover */
+  color: var(--jp-light-green); /* Optional: Change color on hover */
+}
+
+.card-image-container {
+  height: 500px; /* Set a taller fixed height for the container */
+  display: flex; /* Use flex to align the image */
+  align-items: stretch; /* Stretch the child image to fill the container height */
+}
+
+.feature-image {
+  width: 100%; /* ensures image is responsive and fills the width */
+  height: 100%; /* fills the container's height */
+  object-fit: cover; /* ensures the image covers the area without distortion */
+}
+
+.custom-max-width {
+  max-width: 1820px; /* or any other size you prefer */
+  margin-right: auto;
+  margin-left: auto;
+}
+
+
+/* Bootstrap breakpoints for responsive adjustments */
+
+@media (max-width: 2000px) {
   .overlay-text h1 {
-    font-size: 5rem; 
-    color: white; 
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
-    
-  }
-  
-  #features {
-    padding-top: 1rem;
-  }
-  
-  #features .card {
-    border: none;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
-    transition: all .3s ease-in-out;
+    font-size: 8rem;
   }
 
-  .LoginContainer{
-    display: flex;
-    justify-content: center;
-    margin-top: 200px;
-    height: 300px;
-    /* background-image: url("https://th.bing.com/th/id/OIG.j6Ds46eJZ66tBcAU3R2A?w=270&h=270&c=6&r=0&o=5&pid=ImgGn");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center; */
+  .overlay-text p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 996px) {
+  .overlay-text h1 {
+    font-size: 6rem;
   }
 
-  #LoginImage{
-    height: 300px;
+  .overlay-text p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .overlay-text h1 {
+    font-size: 4.5rem;
   }
 
-  #loginButton{
-    width: 150px;
-    margin-left: 120px;
+  .overlay-text p {
+    font-size: 0.85rem;
   }
 
+  .overlay-text {
+    bottom: 10%;
+  }
+}
+
+@media (max-width: 575px) {
+  .overlay-text h1 {
+    font-size: 3.0rem;
+  }
+
+  .overlay-text p {
+    font-size: 0.75rem;
+  }
+
+  .overlay-text {
+    bottom: 20%;
+  }
+}
+
+.card-container {
+  max-width: 50rem; /* Max width for cards on large screens */
+  margin: 0 auto;
+}
+
+.theme-table th, .theme-table td {
+  border-color: var(--jp-brown);
+}
+
+.theme-table thead th {
+  background-color: var(--jp-dark-green);
+  color: var(--jp-tan);
+}

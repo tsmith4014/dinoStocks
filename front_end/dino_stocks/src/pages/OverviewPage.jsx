@@ -134,10 +134,8 @@ const OverviewPage = () => {
     }
   }
 
-
-
   return (
-    <Container fluid>
+    <Container>
       <Row className="my-4">
         <Col md={3}>
           <Card className="mb-3">
@@ -161,7 +159,7 @@ const OverviewPage = () => {
         <Col md={9}>
           <Card className="mb-3">
             <Card.Body>
-              <Card.Title>Portfolio Performance      <Button onClick={handleToggleChart} variant="primary">
+              <Card.Title>Portfolio Performance      <Button onClick={handleToggleChart} variant="success">
                 {showDaily ? 'Show Hourly' : 'Show Daily'}
               </Button></Card.Title>
 
@@ -174,8 +172,8 @@ const OverviewPage = () => {
           </Card>
           <Card>
             <Card.Body>
-              <Card.Title>List of Stocks You Own</Card.Title>
-              <Table striped bordered hover>
+              <Card.Title>Your Owned Stocks</Card.Title>
+              <Table striped bordered hover className="theme-table">
                 <thead>
                   <tr>
                     <th>Stock</th>
@@ -197,7 +195,7 @@ const OverviewPage = () => {
                       <td className={(stock.current_price - stock.price_at_purchase).toFixed(2).startsWith('-') ? 'text-danger' : 'text-success'}> {(stock.current_price - stock.price_at_purchase).toFixed(2).startsWith('-') ? '↓' : '↑'}{(stock.current_price - stock.price_at_purchase).toFixed(2)}</td>
                       <td>{(stock.current_price * stock.shares).toFixed(2)}</td>
                       <td>
-                        <Button onClick={() => handleBuy(stock.alreadyOwned ? stock.id : stock.ticker, stock.alreadyOwned)} variant="success">Buy More</Button>
+                        <Button onClick={() => handleBuy(stock.alreadyOwned ? stock.id : stock.ticker, stock.alreadyOwned)} variant="success">Buy</Button>
                         <Button onClick={() => handleSell(stock.id, true)} variant="danger">Sell</Button>
                       </td>
                     </tr>

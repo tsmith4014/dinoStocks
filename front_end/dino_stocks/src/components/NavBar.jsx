@@ -19,7 +19,7 @@ const NavBar = ({ user, setUser, buyingPower, portfolioValue }) => {
 
 
   return (
-    <Navbar bg="light" expand="lg" >
+    <Navbar expand="lg" >
       <Container fluid>
         <Navbar.Brand as={Link} to="/">
           <img
@@ -39,7 +39,7 @@ const NavBar = ({ user, setUser, buyingPower, portfolioValue }) => {
             <div className="user_info">
               <Navbar.Text>Portfolio Value: ${portfolioValue}</Navbar.Text>
               <Navbar.Text>Buying Power: ${buyingPower}</Navbar.Text>
-              <Button onClick={logOut} variant="danger">
+              <Button onClick={logOut} variant="success">
                 Log Out
               </Button>
             </div>
