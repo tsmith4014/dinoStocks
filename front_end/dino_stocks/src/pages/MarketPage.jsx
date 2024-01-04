@@ -1,4 +1,4 @@
-import { Container, Table, Button } from 'react-bootstrap';
+import { Container, Table, Button, Card } from 'react-bootstrap';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -90,6 +90,8 @@ useEffect(() => {
   return (
     <Container>
       <h1 className="dino-font text-center market-header">Dino Stock Marketplace</h1>
+      <Card>
+        <Card.Body>
       <Table striped bordered hover responsive>
         <thead>
           <tr>
@@ -122,6 +124,8 @@ useEffect(() => {
           ))}
         </tbody>
       </Table>
+      </Card.Body>
+      </Card>
         <TransactionModal
         show={showModal}
         handleClose={() => setShowModal(false)}
