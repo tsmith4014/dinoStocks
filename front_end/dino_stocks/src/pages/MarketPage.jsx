@@ -88,8 +88,8 @@ useEffect(() => {
 }, []);
 
   return (
-    <Container fluid>
-      <h1>Dino Stock Marketplace</h1>
+    <Container>
+      <h1 className="dino-font text-center market-header">Dino Stock Marketplace</h1>
       <Table striped bordered hover responsive>
         <thead>
           <tr>
@@ -105,7 +105,7 @@ useEffect(() => {
         <tbody>
           {data && data.map((stock, index) => (
             <tr key={index}>
-              <td>{dinoImages[stock.dino_ticker] && <img className='marketImage' src={dinoImages[stock.dino_ticker]} />} <Link to={`stock/${stock.id}/`}>{stock.name}</Link> </td>
+              <td>{dinoImages[stock.dino_ticker] && <img className='marketImage' src={dinoImages[stock.dino_ticker]} />} <Link to={`stock/${stock.id}/`} className="stock-link">{stock.name}</Link> </td>
               <td>{stock.dino_ticker}</td>
               <td>${stock.price}</td>
               <td className={stock.change_point.startsWith('-') ? 'text-danger' : 'text-success'}>
@@ -114,9 +114,9 @@ useEffect(() => {
               <td className={stock.change_percentage.startsWith('-') ? 'text-danger' : 'text-success'}>
                 {stock.change_percentage}
               </td>
-              <td>{stock.total_vol}</td>
+              <td >{stock.total_vol}</td>
               <td>
-                <Button onClick={() => handleBuyClick(stock)} variant="primary">Buy</Button>
+                <Button onClick={() => handleBuyClick(stock)} variant="success">Buy</Button>
               </td>
             </tr>
           ))}
