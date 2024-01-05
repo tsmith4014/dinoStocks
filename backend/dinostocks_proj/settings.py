@@ -97,9 +97,12 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "dinostocks_db",
+        "USER": "megan",
+        "PASSWORD": "123",
+        "HOST": "db",  # The hostname of the PostgreSQL container (will be explained later)
+        "PORT": "5432",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
