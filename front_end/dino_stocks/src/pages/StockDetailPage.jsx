@@ -42,11 +42,9 @@ const StockDetailPage = () => {
     }
   }
   useEffect(() => {
-    console.log(id)
     fetchStockData();
   }, []);
 
-  console.log(data)
 
 
   return (

@@ -1,10 +1,10 @@
 
 
-const NotFoundPage =() =>{
+const NotFoundPage = () => {
 
-    return(
+    return (
         <>
-        <h1>Error Not Found</h1>
+            <h1>Error Not Found</h1>
         </>
     )
 }
