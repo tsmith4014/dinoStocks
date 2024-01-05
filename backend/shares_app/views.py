@@ -11,6 +11,7 @@ from rest_framework.status import (
     HTTP_404_NOT_FOUND,
 )
 
+
 class All_Stocks_Shares(APIView):
     def get(self, request):
         try:
@@ -19,7 +20,6 @@ class All_Stocks_Shares(APIView):
             ser_shares = SharesSerializer(shares, many=True)
             return Response(ser_shares.data)
         except:
-            print("didn't work")
             return Response("data not found", status=HTTP_404_NOT_FOUND)
 
     def post(self, request):
@@ -32,12 +32,16 @@ class All_Stocks_Shares(APIView):
             price = shares * current_stock_data.price
             if price > portfolio.money:
                 return Response("Insufficient funds.", status=HTTP_204_NO_CONTENT)
-            existing_shares = Shares.objects.filter(portfolio=portfolio, ticker=ticker).first()
+            existing_shares = Shares.objects.filter(
+                portfolio=portfolio, ticker=ticker
+            ).first()
             if existing_shares:
                 # Update existing shares
                 existing_shares.shares += shares
                 existing_shares.save()
-                return Response(SharesSerializer(existing_shares).data, status=HTTP_200_OK)
+                return Response(
+                    SharesSerializer(existing_shares).data, status=HTTP_200_OK
+                )
             else:
                 # Create new shares
                 new_shares = Shares.objects.create(
@@ -50,10 +54,10 @@ class All_Stocks_Shares(APIView):
                 )
                 portfolio.money -= price
                 portfolio.save()
-                print(new_shares)
-                return Response(SharesSerializer(new_shares).data, status=HTTP_201_CREATED)
+                return Response(
+                    SharesSerializer(new_shares).data, status=HTTP_201_CREATED
+                )
         except Exception as e:
-            print(f"Error: {str(e)}")
             return Response({"error": str(e)}, status=HTTP_400_BAD_REQUEST)
 
 
@@ -72,7 +76,6 @@ class Single_Stock_Shares(APIView):
             portfolio = request.user.portfolio
             single_stock = portfolio.shares.get(id=shares_id)
             current_price = StockMarket.objects.get(ticker=single_stock.ticker).price
-            print(current_price * single_stock.shares, portfolio.money)
             portfolio.money += current_price * single_stock.shares
             portfolio.save()
             single_stock.delete()
@@ -89,7 +92,6 @@ class Single_Stock_Shares(APIView):
             portfolio = request.user.portfolio
             single_stock = portfolio.shares.get(id=shares_id)
             current_price = StockMarket.objects.get(ticker=single_stock.ticker).price
-            print("Type of current_price:", type(current_price))
             buy = request.data.get("buy")
             shares = int(request.data.get("shares", 0))
             if buy:
@@ -122,5 +124,6 @@ class Single_Stock_Shares(APIView):
                 status=HTTP_204_NO_CONTENT,
             )
         except Exception as e:
-            return Response(f"Error handling transaction: {str(e)}", status=HTTP_400_BAD_REQUEST)
-
+            return Response(
+                f"Error handling transaction: {str(e)}", status=HTTP_400_BAD_REQUEST
+            )
