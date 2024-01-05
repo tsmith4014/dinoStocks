@@ -6,7 +6,6 @@ import DinoStocks from '../assets/images/DinoStocks.png';
 
 
 const NavBar = ({ user, setUser, buyingPower, portfolioValue }) => {
-  console.log("Current user in NavBar:", user);
   const navigate = useNavigate()
 
   const logOut = async () => {
@@ -36,7 +35,8 @@ const NavBar = ({ user, setUser, buyingPower, portfolioValue }) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/market">Market</Nav.Link>
-            <Nav.Link as={Link} to="/overview">Overview</Nav.Link>
+            {user && <Nav.Link as={Link} to="/overview">Overview</Nav.Link>}
+            <Nav.Link as={Link} to="/about">About</Nav.Link>
           </Nav>
           {user ? (
             <div className="user_info">

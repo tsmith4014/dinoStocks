@@ -81,3 +81,83 @@
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
     margin-top: 20px;
 }
+
+.about-title {
+    text-align: center;
+    font-size: 4rem;
+    margin: 30px;
+}
+
+.dino-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dino-section {
+    width: 95%;
+    box-sizing: border-box;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8e9a1;
+    color: black;
+    border-radius: 12px;
+}
+
+.dino-section img {
+    max-width: 40%;
+    border-radius: 12px;
+}
+
+.dino-text {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Add this CSS to your existing styles or create a new stylesheet */
+
+.dino-tips {
+    box-sizing: border-box;
+    padding: 40px;
+    background-color: white;
+    text-align: center;
+    position: relative;
+    border-radius: 12px;
+}
+
+
+.dino-tips-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: black;
+}
+
+.dino-tips-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    color: black;
+}
+
+.dino-tips-list-item {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: black;
+}
+
+.features-title {
+    text-align: center;
+}
+
+.cardtitle,
+.cardtext {
+    text-align: center;
+    margin-top: 20px;
+}

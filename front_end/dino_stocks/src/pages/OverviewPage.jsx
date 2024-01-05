@@ -16,9 +16,9 @@ const OverviewPage = () => {
   const token = localStorage.getItem("token");
   const [transactionType, setTransactionType] = useState('buy');
   const [modalTitle, setModalTitle] = useState('Buy Shares');
-  const [image,setImage]=useState("")
-  const {portfolioValue, refreshUserData}=useOutletContext()
-  const [levelTitle,setLevelTitle]= useState("")
+  const [image, setImage] = useState("")
+  const { portfolioValue, refreshUserData } = useOutletContext()
+  const [levelTitle, setLevelTitle] = useState("")
 
   // Function to handle buying shares
   // If the stock is already owned, pass the share ID for PUT request
@@ -106,31 +106,35 @@ const OverviewPage = () => {
     setShowDaily((prevShowDailyAverage) => !prevShowDailyAverage);
   };
 
-  const imageSelector = () =>{
-    console.log(portfolioValue)
-    if (portfolioValue <= 10000 && portfolioValue<50000){
-      setImage("/Velociraptor.png")
-      setLevelTitle("Velociraptor")
-    }
-    if (portfolioValue >=50000 && portfolioValue<100000){
-      setImage("/TriceratopsPFP.png")
-      setLevelTitle("Triceratops")
-    }
-    if (portfolioValue >= 100000 && portfolioValue<250000){
-      setImage("/StegasaurusPFP.png")
-      setLevelTitle("Stegasaurus")
-    }
-    if (portfolioValue >= 250000 && portfolioValue<500000){
-      setImage("/SpinosaurusPFP.png")
-      setLevelTitle("Spinosaurus")
-    }
-    if (portfolioValue >= 500000 && portfolioValue<1000000){
-      setImage("/T-RexPFP.png")
-      setLevelTitle("T-Rex")
-    }
-    if (portfolioValue >= 1000000){
-      setImage("/BrachiosaurusPFP.png")
-      setLevelTitle("Brachiosaurus")
+  const imageSelector = () => {
+    if (portfolioValue) {
+      let portfolioLevel = parseFloat(portfolioValue)
+
+
+      if (portfolioLevel <= 10000 && portfolioLevel < 50000) {
+        setImage("/Velociraptor.png")
+        setLevelTitle("Velociraptor")
+      }
+      if (portfolioLevel >= 50000 && portfolioLevel < 100000) {
+        setImage("/TriceratopsPFP.png")
+        setLevelTitle("Triceratops")
+      }
+      if (portfolioLevel >= 100000 && portfolioLevel < 250000) {
+        setImage("/StegasaurusPFP.png")
+        setLevelTitle("Stegasaurus")
+      }
+      if (portfolioLevel >= 250000 && portfolioLevel < 500000) {
+        setImage("/SpinosaurusPFP.png")
+        setLevelTitle("Spinosaurus")
+      }
+      if (portfolioLevel >= 500000 && portfolioLevel < 1000000) {
+        setImage("/T-RexPFP.png")
+        setLevelTitle("T-Rex")
+      }
+      if (portfolioLevel >= 1000000) {
+        setImage("/BrachiosaurusPFP.png")
+        setLevelTitle("Brachiosaurus")
+      }
     }
   }
 

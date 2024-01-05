@@ -22,7 +22,6 @@ function App() {
     if (token) {
       userAPI.defaults.headers.common["Authorization"] = `Token ${token}`
       let response = await userAPI.get("")
-      console.log("now has a user")
       setUserData(response.data)
       setUser(response.data.email)
     }
