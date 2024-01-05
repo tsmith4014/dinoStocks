@@ -31,3 +31,53 @@
     justify-content: space-evenly;
     gap: 20px;
 }
+
+.detail-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.title-dino {
+    text-align: center;
+}
+
+.image-dino {
+    max-width: 35%;
+    border-radius: 12px;
+}
+
+.iframe-container {
+    position: relative;
+}
+
+
+#dino-ticker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 500px;
+    margin-top: 20px;
+    /* Add margin as needed to adjust the distance from the top and left */
+    background-color: white;
+    color: black;
+    /* Add background color to make it readable */
+    padding: 5px;
+    /* Add padding for better aesthetics */
+}
+
+.iframe-dino {
+    width: 100%;
+    height: 450px;
+    background: #FFF;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
+    margin-top: 20px;
+}

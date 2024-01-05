@@ -1,18 +1,21 @@
 import React from 'react';
-import { useEffect } from 'react';
 import { Navbar, Nav, Container, Button, NavItem } from 'react-bootstrap';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { userAPI } from "../utilities";
 import DinoStocks from '../assets/images/DinoStocks.png';
 
+
 const NavBar = ({ user, setUser, buyingPower, portfolioValue }) => {
   console.log("Current user in NavBar:", user);
+  const navigate = useNavigate()
+
   const logOut = async () => {
     let response = await userAPI.post("LogOut/");
     if (response.status === 204) {
       setUser(null);
       localStorage.removeItem("token");
       delete userAPI.defaults.headers.common["Authorization"];
+      navigate("/")
     }
 
   };
@@ -37,8 +40,8 @@ const NavBar = ({ user, setUser, buyingPower, portfolioValue }) => {
           </Nav>
           {user ? (
             <div className="user_info">
-              <Navbar.Text>Portfolio Value: ${portfolioValue}</Navbar.Text>
-              <Navbar.Text>Buying Power: ${buyingPower}</Navbar.Text>
+              <Navbar.Text>Portfolio Value: ${parseFloat(portfolioValue).toFixed(2)}</Navbar.Text>
+              <Navbar.Text>Buying Power: ${parseFloat(buyingPower).toFixed(2)}</Navbar.Text>
               <Button onClick={logOut} variant="success">
                 Log Out
               </Button>
