@@ -1,0 +1,73 @@
+version: '3'
+
+services:
+  frontend:
+    build:
+      context: ./front_end/dino_stocks
+      dockerfile: Dockerfile
+    image: react_app
+    ports:
+      - "5173:5173"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: django_api
+    command: sh -c "python manage.py migrate && python manage.py loaddata stock_data.json && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+      - celery-worker
+      - celery-beat
+    env_file:
+      - ./backend/.env
+    environment:
+      - TZ=America/New_York
+    links:
+      - db
+  db:
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
+    ports:
+      - "5432:5432"
+    image: postgres-container
+    environment:
+      POSTGRES_DB: dinostocks_db
+      POSTGRES_USER: megan
+      POSTGRES_PASSWORD: 123
+
+  redis:
+    image: "redis:latest"
+    command: redis-server
+
+  celery-worker:
+    build:
+      context: ./backend # Adjust the context as needed
+      dockerfile: Dockerfile
+    command: celery -A dinostocks_proj worker -l info
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+      - redis
+    links:
+      - redis
+
+  celery-beat:
+    build:
+      context: ./backend # Adjust the context as needed
+      dockerfile: Dockerfile
+    command: celery -A dinostocks_proj beat -l info
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+      - redis
+    links:
+      - redis
