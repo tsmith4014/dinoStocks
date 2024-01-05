@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import MarketPage from "./pages/MarketPage";
 import OverviewPage from "./pages/OverviewPage";
+import AboutPage from "./pages/AboutPage";
 import SignUpPage from "./pages/SignUpPage";
 import StockDetailPage from "./pages/StockDetailPage";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
             {
                 path: "overview/",
                 element: <OverviewPage />
+            },
+            {
+                path: "about/",
+                element: <AboutPage />
             },
             {
                 path: "signup/",
