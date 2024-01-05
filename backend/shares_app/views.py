@@ -31,7 +31,7 @@ class All_Stocks_Shares(APIView):
             current_stock_data = StockMarket.objects.get(ticker=ticker)
             price = shares * current_stock_data.price
             if price > portfolio.money:
-                return Response("Insufficient funds.", status=HTTP_204_NO_CONTENT)
+                return Response(data="Insufficient funds.", status=HTTP_204_NO_CONTENT)
             existing_shares = Shares.objects.filter(
                 portfolio=portfolio, ticker=ticker
             ).first()
@@ -102,7 +102,9 @@ class Single_Stock_Shares(APIView):
                     single_stock.shares += shares
                     single_stock.save()
                 else:
-                    return Response("Insufficient funds.", status=HTTP_204_NO_CONTENT)
+                    return Response(
+                        data="Insufficient funds.", status=HTTP_204_NO_CONTENT
+                    )
             else:
                 if shares >= single_stock.shares:
                     total = current_price * single_stock.shares

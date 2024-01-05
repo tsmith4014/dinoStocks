@@ -44,6 +44,9 @@ const TransactionModal = ({ show, handleClose, shareId, fetchPortfolio, token, i
           handleClose();
           fetchPortfolio(); // Refresh the portfolio data
           refreshUserData();
+          if (response.data.length == 0) {
+            alert("Insufficient Funds or Shares")
+          }
         }
       } catch (error) {
         console.error("Error with transaction:", error.response ? error.response.data : error);
