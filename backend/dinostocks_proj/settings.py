@@ -23,12 +23,12 @@ env = dotenv_values(".env")
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-g=-^q-yd9am)f0gfrwey7q*$ps+zo7b6sf9ac5t&ds(s^c*)mx"
+SECRET_KEY = "django-insecure-g=-^q-yd9am)f0gfrwey7q*$ps+zo7b6sf9ac5t&ds(s^c*)mx" #change after confirming that it works
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*'] #change to specific when working
 
 
 # Application definition
@@ -93,11 +93,14 @@ WSGI_APPLICATION = "dinostocks_proj.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "dinostocks_db",
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME', 'default_database'),
+        'USER': os.environ.get('DB_USER', 'default_user'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'default_password'),
+        'HOST': os.environ.get('DB_HOST', 'default_host'),
+        'PORT': os.environ.get('DB_PORT', 'default_port'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -143,5 +146,5 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Celery Server to run routine tasks
-CELERY_BROKER_URL = "redis://localhost:6379/0"
-CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+CELERY_BROKER_URL = "redis://redis:6379/0" #changed from localhost to redis
+CELERY_RESULT_BACKEND = "redis://redis:6379/0" #changed from localhost to redis
