@@ -19,6 +19,7 @@ COPY --from=builder /front_end/package-lock.json ./package-lock.json
 COPY --from=builder /front_end/dist ./dist
 COPY --from=builder /front_end/index.html ./index.html
 COPY --from=builder /front_end/src ./src
+COPY --from=builder /front_end/public ./public
 COPY --from=builder /front_end/vite.config.js ./vite.config.js
 
 RUN npm install
