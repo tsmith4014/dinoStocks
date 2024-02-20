@@ -95,6 +95,10 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "dinostocks_db",
+        "USER": "megan",
+        "PASSWORD": "123",
+        "HOST": "my-dinostocks-db",  # Use the name of your PostgreSQL container here
+        "PORT": "5432",
     }
 }
 
