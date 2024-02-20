@@ -1,0 +1,12 @@
+# postgres Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: dinostocks-database
+  namespace: otterpenguin
+spec:
+  type: ClusterIP
+  ports:
+  - port: 5432
+  selector:
+    app: dinostocks-database
