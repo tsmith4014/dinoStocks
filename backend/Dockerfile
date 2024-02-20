@@ -42,4 +42,5 @@ WORKDIR /dinostocks_proj
 
 COPY --from=builder /dinostocks_proj .
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "dinostocks_proj.wsgi:application"]
+#CMD ["gunicorn", "--bind", "0.0.0.0:8000", "dinostocks_proj.wsgi:application"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
