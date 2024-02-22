@@ -1,0 +1,47 @@
+# Build stage
+FROM python:latest AS builder
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR /backend
+
+# Create a virtual environment to isolate our package dependencies locally
+RUN python -m venv /venv
+
+# Ensure scripts from the virtual environment are used
+ENV PATH="/venv/bin:$PATH"
+
+# Install system dependencies required for build
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        gcc \
+        libpq-dev \
+        postgresql-client
+
+# Upgrade pip and install project dependencies
+COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+# Deployment image
+FROM python:alpine
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Copy the virtual environment from the builder stage
+COPY --from=builder /venv /venv
+
+# Ensure scripts from the virtual environment are used
+ENV PATH="/venv/bin:$PATH"
+
+WORKDIR /backend
+
+# Copy application code
+COPY . .
+
+EXPOSE 8000
+
+# Command to run the application using gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "dinostocks_proj.wsgi:application"]

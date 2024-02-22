@@ -1,0 +1,8 @@
+docker build -t dino-app-psql .
+docker run --name my-dinostocks-db -e POSTGRES_USER=megan -e POSTGRES_PASSWORD=123 -e POSTGRES_DB=dinostocks_db --network=dinostocks-network -p 5432:5432 -d dino-app-psql:latest
+
+ docker build -t dino-app-frontend .
+docker run --name dino-app-frontend --network=dinostocks-network -p 5173:5173 -d dino-app-frontend
+
+docker build -t dino-app-backend .
+docker run --name dino-app-backend --network=dinostocks-network -p 8000:8000 -d dino-app-backend

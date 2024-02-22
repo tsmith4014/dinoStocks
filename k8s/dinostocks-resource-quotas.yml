@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: dinostocks-quota
+  namespace: otterpenguin
+spec:
+  hard:
+    pods: "8"
+    requests.cpu: "2"
+    requests.memory: 2Gi
+    limits.cpu: "2"
+    limits.memory: 4Gi

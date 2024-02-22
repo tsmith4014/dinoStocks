@@ -14,7 +14,7 @@ SECRET_KEY = "django-insecure-g=-^q-yd9am)f0gfrwey7q*$ps+zo7b6sf9ac5t&ds(s^c*)mx
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -83,6 +83,7 @@ DATABASES = {
         "NAME": "dinostocks_db",
         "USER": "megan",
         "PASSWORD": "123",
+        # "HOST": "localhost",  # Use the name of your PostgreSQL container here
         "HOST": "my-dinostocks-db",  # Use the name of your PostgreSQL container here
         "PORT": "5432",
     }

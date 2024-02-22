@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: my-dinostocks-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: dinostocks_db
+      POSTGRES_USER: megan
+      POSTGRES_PASSWORD: 123
+    # Removed the volume for PostgreSQL to avoid data persistence for testing
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: dino-app-backend
+    command: sh -c "while ! nc -z db 5432; do sleep 1; done && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      PYTHONPATH: /backend/dependencies
+      # Hardcoded environment variables as requested, removed the env_file line
+
+  frontend:
+    build:
+      context: ./front_end/dino_stocks
+      dockerfile: Dockerfile
+    container_name: dino-app-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
