@@ -1,5 +1,5 @@
 # Define your RDS instance
-resource "aws_db_instance" "example" {
+resource "aws_db_instance" "dinostocks_postgres" {
   identifier           = var.db_instance_identifier
   engine               = var.db_engine
   engine_version       = var.db_engine_version
@@ -15,7 +15,7 @@ resource "aws_db_instance" "example" {
   }
 }
 
-# Define the security group for RDS
+# Security Group for RDS
 resource "aws_security_group" "rds_sg" {
   name        = "rds_sg"
   description = "Allow inbound access to RDS instance"
@@ -25,7 +25,7 @@ resource "aws_security_group" "rds_sg" {
     from_port   = var.db_port
     to_port     = var.db_port
     protocol    = "tcp"
-    security_groups = [aws_security_group.eks_nodes.id]  # Allow traffic from EKS nodes
+    security_groups = [aws_security_group.eks_nodes.id]  # Allows traffic from EKS nodes
   }
 
   # Define egress rules
@@ -33,7 +33,7 @@ resource "aws_security_group" "rds_sg" {
     from_port       = 0
     to_port         = 0
     protocol        = "-1"
-    security_groups = [aws_security_group.eks_nodes.id]  # Allow traffic to EKS nodes
+    security_groups = [aws_security_group.eks_nodes.id]  # Allows traffic to EKS nodes
   }
 }
 
