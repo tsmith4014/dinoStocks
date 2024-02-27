@@ -12,7 +12,8 @@ def get_stock_data():
     print(f"Running get_stock_data at {datetime.now()}")
     # Your periodic task code goes here
     headers = {
-        "X-RapidAPI-Key": env.get("RAPID_API_KEY"),
+        # "X-RapidAPI-Key": env.get("RAPID_API_KEY"),
+        "X-RapidAPI-Key":"fb65c046fcmsh6ff7c59a4d68cd3p1207ffjsn7527104d56b5",
         "X-RapidAPI-Host": "realstonks.p.rapidapi.com",
     }
 

@@ -26,7 +26,7 @@ services:
       DB_HOST: db
       DB_PORT: 5432
       PYTHONPATH: /backend/dependencies
-      # Hardcoded environment variables as requested, removed the env_file line
+      # Hardcoded environment variables for development purposes
 
   frontend:
     build:

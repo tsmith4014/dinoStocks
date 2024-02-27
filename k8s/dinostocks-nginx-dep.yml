@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dinostocks-frontend
+  namespace: otterpenguin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dinostocks-frontend
+  template:
+    metadata:
+      labels:
+        app: dinostocks-frontend
+    spec:
+      containers:
+      - name: dinostocks-frontend
+        image: tsmith4014/dino-app-frontend:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "50m"
+          limits:
+            memory: "500Mi"
+            cpu: "100m"
+
+
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: nginx
+#   namespace: otterpenguin
+# spec:
+#   selector:
+#     matchLabels:
+#       app: nginx
+#   template:
+#     metadata:
+#       labels:
+#         app: nginx
+#     spec:
+#       containers:
+#       - name: nginx
+#         image: nginx:latest
+#         ports:
+#         - containerPort: 80
+#         resources:
+#           limits:
+#             cpu: "1"
+#             memory: "500Mi"
+#           requests:
+#             cpu: "300m" 
+#             memory: "200Mi"
+#         volumeMounts:
+#         - name: config-volume
+#           mountPath: /etc/nginx/nginx.conf
+#           subPath: nginx.conf
+#         - name: config-volume
+#           mountPath: /etc/nginx/conf.d/default.conf
+#           subPath: default.conf
+#       volumes:
+#       - name: config-volume
+#         configMap:
+#           name: nginx-config

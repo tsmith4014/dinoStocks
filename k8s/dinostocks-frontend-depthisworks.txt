@@ -15,9 +15,9 @@ spec:
     spec:
       containers:
       - name: dinostocks-frontend
-        image: tsmith4014/dino-app-frontend:latest  # Ensure this image has Nginx configured as described
+        image: tsmith4014/dino-app-frontend:latest
         ports:
-          - containerPort: 80  # Nginx listens on port 80
+          - containerPort: 5173
         resources:
           requests:
             memory: "500Mi"
@@ -25,3 +25,14 @@ spec:
           limits:
             memory: "500Mi"
             cpu: "100m"
+        env:
+          - name: REACT_APP_BACKEND_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: dinostocks-configmap
+                key: REACT_APP_BACKEND_HOST
+          - name: REACT_APP_BACKEND_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: dinostocks-configmap
+                key: REACT_APP_BACKEND_PORT

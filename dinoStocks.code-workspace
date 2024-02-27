@@ -1,0 +1,10 @@
+Chads-MacBook-Air:aws_keys chadthompsonsmith$ kubectl config use-context arn:aws:eks:us-east-1:182403015120:cluster/dinostocks-cluster
+Switched to context "arn:aws:eks:us-east-1:182403015120:cluster/dinostocks-cluster".
+Chads-MacBook-Air:aws_keys chadthompsonsmith$ {
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}

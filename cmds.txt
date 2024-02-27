@@ -1,3 +1,17 @@
+http://a98498c5235f14b06987b4642ec7a1b0-917926178.us-east-1.elb.amazonaws.com:5173/
+
+
+docker buildx build --platform linux/amd64,linux/arm64 -t tsmith4014/dino-app-frontend . --push
+
+kubectl set image deployment/dinostocks-frontend-deployment dinostocks-frontend=tsmith4014/dino-app-frontend:latest -n otterpenguin
+
+docker buildx build --platform linux/amd64,linux/arm64 -t tsmith4014/dino-app-backend . --push
+
+kubectl set image deployment/dinostocks-frontend-deployment dinostocks-frontend=tsmith4014/dino-app-frontend:latest -n otterpenguin
+
+kubectl set image deployment/dinostocks-backend-deployment  dinostocks-backend=tsmith4014/dino-app-backend:latest -n otterpenguin
+
+
 docker build -t dino-app-psql .
 docker run --name my-dinostocks-db -e POSTGRES_USER=megan -e POSTGRES_PASSWORD=123 -e POSTGRES_DB=dinostocks_db --network=dinostocks-network -p 5432:5432 -d dino-app-psql:latest
 
@@ -6,3 +20,576 @@ docker run --name dino-app-frontend --network=dinostocks-network -p 5173:5173 -d
 
 docker build -t dino-app-backend .
 docker run --name dino-app-backend --network=dinostocks-network -p 8000:8000 -d dino-app-backend
+
+
+
+aws eks update-kubeconfig --name dinostocks-cluster --region us-east-1 --profile otterpenguin
+
+#######################frontend pod history#####################
+ 0 ls
+   1 ls /usr/share/nginx/html 
+   2 cat /etc/nginx/nginx.conf
+   3 ls
+   4 cd usr
+   5 ls
+   6 cd share
+   7 ls
+   8 cd nginx/
+   9 ls
+  10 cd html/
+  11 ls
+  12 cat 50x.html 
+  13 curl http://dinostocks-backend:8000
+  14 ls
+  15 cd assets/
+  16 ls
+  17 cd ..
+  18 ls
+  19 pwd
+  20 cat 50x.html 
+  21 history
+
+##############################################################################
+
+
+
+
+
+###################backend cmds################################################
+
+
+
+
+###############################################################################
+
+  5 kind: Service
+ 186 metadata:
+ 187   name: dinostocks-frontend
+ 188   namespace: otterpenguin
+ 189 spec:
+ 190   ports:
+ 191   - port: 80
+ 192     targetPort: 80
+ 193   selector:
+ 194     app: dinostocks-frontend
+ 195   type: LoadBalancer
+ 196 ls
+ 197 cat /etc/nginx/nginx.conf
+ 198 cat /var/log/nginx/access.log
+ 199 nano /etc/nginx/nginx.conf
+ 200 apk add nano
+ 201 nano /etc/nginx/nginx.conf
+ 202 ps -ef | grep nginx
+ 203 cat /etc/nginx/nginx.conf
+ 204 clear
+ 205 cat /etc/nginx/nginx.conf
+ 206 ls
+ 207 pwd
+ 208 history
+/usr/share/nginx/html # 
+
+#################################cmds history######################
+(venv) Chads-MacBook-Air:k8s chadthompsonsmith$ history
+   19  cd ..
+   20  ls
+   21  backend/
+   22  ls
+   23  cd backend/
+   24  ls
+   25  pwd
+   26  cd ..
+   27  ls
+   28  cd front_end/
+   29  ls
+   30  cd dino_stocks/
+   31  ls
+   32  cat Dockerfile
+   33  docker build -t dino-app-frontend-dev .
+   34  docker run --name dino-app-frontend --network=dinostocks-network -p 5173:5173 -d dino-app-frontend-dev
+   35  docker logs my-dinostocks-db
+   36  docker restart my-dinostocks-db
+   37  docker restart dino-app-backend
+   38  history
+   39  ls
+   40  docker restart my-dinostocks-db
+   41  docker restart dino-app-backend
+   42  docker restart dino-app-frontend
+   43  history
+   44  pwd
+   45  ls
+   46  docker build -t dino-app-frontend-dev .
+   47  docker run --name dino-app-frontend --network=dinostocks-network -p 5173:5173 -d dino-app-frontend-dev
+   48  docker images
+   49  docker ps
+   50  ls
+   51  cd ..
+   52  ls
+   53  cd ..
+   54  ls
+   55  docker compose up
+   56  docker compose up
+   57  docker compose down
+   58  docker compose up
+   59  docker compose down
+   60  docker compose up
+   61  docker compose down
+   62  ls
+   63  docker compose up
+   64  docker compose down
+   65  docker compose up
+   66  history
+   67  docker run --name my-dinostocks-db -e POSTGRES_USER=megan -e POSTGRES_PASSWORD=123 -e POSTGRES_DB=dinostocks_db --network=dinostocks-network -p 5432:5432 -d dino-app-psql:latest
+   68  ls
+   69  cd psql/
+   70  ls
+   71  docker run --name my-dinostocks-db -e POSTGRES_USER=megan -e POSTGRES_PASSWORD=123 -e POSTGRES_DB=dinostocks_db --network=dinostocks-network -p 5432:5432 -d dino-app-psql:latest
+   72  docker build -t dino-app-psql .
+   73  cd ..
+   74  ls
+   75  cd front_end/
+   76  ls
+   77  cd dino_stocks/
+   78  ls
+   79  docker run --name dinostocks-db -e POSTGRES_USER=megan -e POSTGRES_PASSWORD=123 -e POSTGRES_DB=dinostocks_db --network=dinostocks-network -d postgres
+   80  docker build -t dino-app-frontend-dev .
+   81  ocker run --name dino-app-frontend --network=dinostocks-network -p 5173:5173 -d dino-app-frontend-dev
+   82  docker run --name dino-app-frontend --network=dinostocks-network -p 5173:5173 -d dino-app-frontend-dev
+   83  history
+   84  cd ..
+   85  ls
+   86  cd ..
+   87  ls
+   88  cd backend/
+   89  ls
+   90  docker build -t dino-app-backend .
+   91  docker build -t dino-app-frontend-dev .
+   92  ls
+   93  ls
+   94  cd ..
+   95  ls
+   96  cd front_end/
+   97  ls
+   98  cd dino_stocks/
+   99  ls
+  100  docker build -t dino-app-frontend-dev .
+  101  history
+  102  docker run --name my-dinostocks-db -e POSTGRES_USER=megan -e POSTGRES_PASSWORD=123 -e POSTGRES_DB=dinostocks_db --network=dinostocks-network -p 5432:5432 -d dino-app-psql:latest
+  103  ls
+  104  cd ..
+  105  cd ..
+  106  ls
+  107  cd psql/
+  108  ls
+  109  docker build -t dino-app-psql .
+  110  docker run --name my-dinostocks-db -e POSTGRES_USER=megan -e POSTGRES_PASSWORD=123 -e POSTGRES_DB=dinostocks_db --network=dinostocks-network -p 5432:5432 -d dino-app-psql:latest
+  111  docker run --name dino-app-frontend --network=dinostocks-network -p 5173:5173 -d dino-app-frontend-dev
+  112  docker run --name dino-app-backend --network=dinostocks-network -p 8000:8000 -d dino-app-backend
+  113  docker ps
+  114  docker exec -it dino-app-backend sh
+  115  docker exec -it dino-app-backend sh
+  116  docker exec -it dino-app-backend sh
+  117  ls
+  118  history
+  119  docker ps
+  120  docker ps
+  121  docker images
+  122  history
+  123  docker build -t dino-app-frontend .
+  124  pwd
+  125  ls
+  126  history
+  127  docker build -t dino-app-psql .
+  128  docker run --name my-dinostocks-db -e POSTGRES_USER=megan -e POSTGRES_PASSWORD=123 -e POSTGRES_DB=dinostocks_db --network=dinostocks-network -p 5432:5432 -d dino-app-psql:latest
+  129  docker run --name dino-app-frontend --network=dinostocks-network -p 5173:5173 -d dino-app-frontend-dev
+  130  docker run --name dino-app-backend --network=dinostocks-network -p 8000:8000 -d dino-app-backend
+  131  docker run --name dino-app-frontend --network=dinostocks-network -p 5173:5173 -d dino-app-frontend
+  132  history
+  133  cd..
+  134  ls
+  135  cd ..
+  136  ls
+  137  cd front_end/
+  138  cd dino_stocks/
+  139  ls
+  140   docker build -t dino-app-frontend .
+  141  docker run --name dino-app-frontend --network=dinostocks-network -p 5173:5173 -d dino-app-frontend
+  142  docker network inspect dinostocks-network
+  143  docker exec -it dino-app-frontend /bin/sh
+  144  curl -X POST http://localhost:8000/api/v1/user/SignUp/ -H "Content-Type: application/json" -d '{"email": "vega@gmail.com", "password": "Vega4014!"}'
+  145  history
+  146  pwd
+  147  ls
+  148  docker build -t dino-app-frontend .
+  149  history
+  150  docker run --name dino-app-frontend --network=dinostocks-network -p 5173:5173 -d dino-app-frontend
+  151  ls
+  152  cd ..
+  153  ls
+  154  cd ..
+  155  ls
+  156  docker-compose -f docker-compose-2of3worknotbackend.yml up
+  157  docker-compose -f docker-compose-2of3worknotbackend.yml up
+  158  docker-compose -f docker-compose-2of3worknotbackend.yml down
+  159  docker-compose -f docker-compose-2of3worknotbackend.yml up
+  160  docker-compose -f docker-compose-2of3worknotbackend.yml down
+  161  docker-compose -f docker-compose-2of3worknotbackend.yml up
+  162  history
+  163  ls
+  164  git status
+  165  git add backend/dinostocks_proj/settings.py front_end/dino_stocks/src/utilities.jsx
+  166  git status
+  167  git add backend/Dockerfilenonworkingcopy backend/thisdockerfiledoesntwork cmds.txt docker-compose-3of3work.yml docker-compose.yml k8s/
+  168  git status
+  169  git push origin chads-branch
+  170  git status
+  171  git commit -m "docker dev and minik rdy"
+  172  git push origin chads-branch
+  173  minikube ip
+  174  kubectl get svc
+  175  minikube service list
+  176  kubectl get ingress
+  177  pwd
+  178  minikube addons enable ingress
+  179  ls
+  180  cd k8s/
+  181  ls
+  182  kubectl apply -f ingress.yaml
+  183  kubectl apply -f ingress.yml
+  184  kubectl apply -f ingress.yml
+  185  history
+  186  minikube ip
+  187  minikube ip
+  188  curl -X GET "https://realstonks.p.rapidapi.com/AAPL"      -H "X-RapidAPI-Key: fb65c046fcmsh6ff7c59a4d68cd3p1207ffjsn7527104d56b5"      -H "X-RapidAPI-Host: realstonks.p.rapidapi.com"
+  189  curl -X GET "https://realstonks.p.rapidapi.com/AAPL"      -H "X-RapidAPI-Key: fb65c046fcmsh6ff7c59a4d68cd3p1207ffjsn7527104d56b5"      -H "X-RapidAPI-Host: realstonks.p.rapidapi.com"
+  190  docker run -d -p 6379:6379 redis
+  191  ls
+  192  cd ..
+  193  ls
+  194  cd backend/
+  195  ls
+  196  cd realstonks_app/
+  197  ls
+  198  cd fixtures/
+  199  ls
+  200  pwd
+  201  ls
+  202  cd
+  203  ls
+  204  cd DevOpsAlpha/
+  205  ls
+  206  cd aws_keys/
+  207  ls
+  208  54.144.36.98 ssh -i "devops-ew.pem" ubuntu@ec2-54-144-36-98.compute-1.amazonaws.com
+  209  ssh -i "devops-ew.pem" ubuntu@ec2-54-144-36-98.compute-1.amazonaws.com
+  210  ssh -i "east1-user2.pem" ubuntu@ec2-54-144-36-98.compute-1.amazonaws.com
+  211  ssh -i "east1-user2.pem" ec2-user@ec2-54-144-36-98.compute-1.amazonaws.com
+  212  ls
+  213  ssh -i "east1-user2.pem" ec2-user@ec2-54-144-36-98.compute-1.amazonaws.com
+  214  ls la
+  215  ls -la
+  216  cat ~/.aws/credentials
+  217  nano ~/.aws/credentials
+  218  ls
+  219  ssh -i "east1-user2.pem" ec2-user@ec2-54-144-36-98.compute-1.amazonaws.com
+  220  ssh -i "devops-ew.pem" ubuntu@ec2-107-22-41-6.compute-1.amazonaws.com
+  221  ssh -v -i "east1-user2.pem" ec2-user@ec2-54-144-36-98.compute-1.amazonaws.com
+  222  ssh -v -i "east1-user2.pem" ec2-user@ec2-54-160-156-234.compute-1.amazonaws.com
+  223  chmod 400 east1-user2.pem
+  224  ssh -v -i "east1-user2.pem" ec2-user@ec2-54-160-156-234.compute-1.amazonaws.com
+  225  aws eks update-kubeconfig --name dinostocks-cluster --region us-east-1
+  226  clear
+  227  history
+  228  cat ~/.aws/credentials
+  229  aws eks --region us-east-1 update-kubeconfig --name dinostocks-cluster --profile otterpenguin
+  230  kubectl get nodes
+  231  kubectl get pods --all-namespaces
+  232  kubectl get nodes
+  233  kubectl describe node ip-192-168-26-93.ec2.internal
+  234  kubectl get all -n otterpenguin
+  235  kubectl get namespaces
+  236   kubectl config current-context
+  237  ssh -v -i "east1-user2.pem" ec2-user@ec2-54-160-156-234.compute-1.amazonaws.com
+  238  ssh -v -i "east1-user2.pem" ec2-user@ec2-54-144-36-98.compute-1.amazonaws.com
+  239  kubectl config current-context
+  240  kubectl config get-contexts
+  241  kubectl get namespaces
+  242  kubectl describe namespace otterpenguin
+  243  kubectl config use-context minikube
+  244  kubectl get namespaces
+  245  kubectl describe namespace otterpenguin
+  246  kubectl config use-context arn:aws:eks:us-east-1:182403015120:cluster/dinostocks-cluster
+  247  kubectl config get-contexts
+  248  kubectl cluster-info
+  249  kubectl get nodes
+  250  kubectl get pods --all-namespaces
+  251  kubectl get svc --all-namespaces
+  252  /usr/bin/python3 /Users/chadthompsonsmith/.vscode/extensions/ms-python.python-2024.0.1/pythonFiles/printEnvVariablesToFile.py /Users/chadthompsonsmith/.vscode/extensions/ms-python.python-2024.0.1/pythonFiles/deactivate/bash/envVars.txt
+  253  ls
+  254  ls
+  255  python3 -m venv venv
+  256  ls
+  257  source venv/bin/activate
+  258  pip install requirements.txt 
+  259  pip install -r requirements.txt 
+  260  ls
+  261  cd backend/
+  262  ls
+  263  python manage.py runserver
+  264  createdb dinostocks_db
+  265  python manage.py runserver
+  266  python manage.py makemigrations
+  267  python manage.py migrate
+  268  python manage.py runserver
+  269  clear
+  270  history
+  271  python manage.py runserver
+  272  ls
+  273  cd ..
+  274  ls
+  275  cd backend/
+  276  python manage.py runserver
+  277  python manage.py makemigrations
+  278  ls
+  279  cd ..
+  280  ls
+  281  python manage.py makemigrations
+  282  cd backend/
+  283  python manage.py makemigrations
+  284  python manage.py makemigrations
+  285  python manage.py runserver
+  286  python manage.py runserver
+  287  history
+  288  history
+  289  docker exec -it dino-app-backend sh
+  290  docker exec -it dino-app-backend sh
+  291  history
+  292  ls
+  293  celery -A dinostocks_proj worker --loglevel=info
+  294  celery -A dinostocks_proj worker --loglevel=info
+  295  history
+  296  celery -A dinostocks_proj worker --loglevel=info
+  297  git status
+  298  echo $AWS_ACCESS_KEY_ID
+  299  echo $AWS_SECRET_ACCESS_KEY
+  300  cat ~/.aws/credentials
+  301  ls
+  302  /usr/bin/python3 /Users/chadthompsonsmith/.vscode/extensions/ms-python.python-2024.0.1/pythonFiles/printEnvVariablesToFile.py /Users/chadthompsonsmith/.vscode/extensions/ms-python.python-2024.0.1/pythonFiles/deactivate/bash/envVars.txt
+  303  kubectl exec -it dinostocks-backend-deployment-695979bd67-ffzx2 -n otterpenguin -- /bin/sh
+  304  history
+  305  kubectl exec -it dinostocks-backend-deployment-695979bd67-5nmj9 -n otterpenguin -- /bin/sh
+  306  kubectl exec -it dinostocks-frontend-deployment-85d57cb88d-qwk5c -n otterpenguin -- wget -qO- http://dinostocks-backend:8000/api/v1/user/
+  307  curl http://a98498c5235f14b06987b4642ec7a1b0-917926178.us-east-1.elb.amazonaws.com:5173
+  308  history
+  309  curl http://a06a9153f3b5f401ea5fc9000fb89831-1928860692.us-east-1.elb.amazonaws.com:8000/api/v1/user/
+  310  kubectl logs dinostocks-database-7dbd48dcf8-r6zcd -n otterpenguin
+  311  kubectl get events -n otterpenguin
+  312  psql -h dinostocks-database -U megan -d dinostocks_db
+  313  kubectl exec -it dinostocks-backend-deployment-695979bd67-ffzx2 -n otterpenguin -- nslookup dinostocks-database
+  314  kubectl exec -it dinostocks-backend-deployment-695979bd67-ffzx2 -n otterpenguin -- psql -h dinostocks-database -U <db_user> -d <db_name> -W
+  315  kubectl logs dinostocks-database-7dbd48dcf8-r6zcd -n otterpenguin
+  316  kubectl exec -it dinostocks-backend-deployment-695979bd67-ffzx2 -n otterpenguin -- psql -h dinostocks-database -U admin -d dinostocks_db -W
+  317  kubectl get nodes
+  318  kubectl describe node ip-192-168-26-93.ec2.internal
+  319  clear
+  320  kubectl get pods -n otterpenguin -a | grep Evicted
+  321  kubectl describe pod dinostocks-backend-deployment-695979bd67-ffzx2 -n otterpenguin
+  322  kubectl logs dinostocks-backend-deployment-695979bd67-ffzx2 -n otterpenguin
+  323  history
+  324  /usr/bin/python3 /Users/chadthompsonsmith/.vscode/extensions/ms-python.python-2024.0.1/pythonFiles/printEnvVariablesToFile.py /Users/chadthompsonsmith/.vscode/extensions/ms-python.python-2024.0.1/pythonFiles/deactivate/bash/envVars.txt
+  325  ls
+  326  cd front_end/
+  327  ls
+  328  cd dino_stocks/
+  329  ls
+  330  docker buildx build --platform linux/amd64,linux/arm64 -t tsmith4014/dino-app-frontend . --push
+  331  history
+  332  kubectl get services -n otterpenguin
+  333  kubectl get se
+  334  kubectl get pods -n otterpenguin
+  335  kubectl get service dinostocks-backend -n otter
+  336  history
+  337  ls
+  338  docker buildx build --platform linux/amd64,linux/arm64 -t tsmith4014/dino-app-frontend . --push
+  339  history
+  340  kubectl logs -f dinostocks-frontend-deployment-85d57cb88d-qwk5c -n otterpenguin
+  341  kubectl get service dinostocks-frontend-service -n otterpenguin
+  342  kubectl get services -n otterpenguin
+  343  kubectl get service dinostocks-frontend -n otterpenguin
+  344  kubectl get pods -n otterpenguin
+  345  history
+  346  ls
+  347  docker buildx build --platform linux/amd64,linux/arm64 -t tsmith4014/dino-app-frontend . --push
+  348  history
+  349  kubectl get service dinostocks-frontend-service -n otterpenguin
+  350  kubectl get service dinostocks-frontend -n otterpenguin
+  351  kubectl get pods -n otterpenguin
+  352  kubectl delete pod dinostocks-backend-deployment-695979bd67-ffzx2 -n otterpenguin
+  353  kubectl get pods -n otterpenguin
+  354  kubectl get pods -n otterpenguin
+  355  kubectl get pods -n otterpenguin
+  356  history
+  357  kubectl get service dinostocks-frontend -n otterpenguin
+  358   kubectl get pods -n otterpenguin
+  359  kubectl describe pod <pod-name> -n otterpenguin
+  360  clear
+  361  kubectl describe pod dinostocks-backend-deployment-695979bd67-5nmj9 -n otterpenguin
+  362  kubectl describe pod dinostocks-database-7dbd48dcf8-r6zcd -n otterpenguin
+  363  kubectl describe pod dinostocks-frontend-deployment-85d57cb88d-9smw4 -n otterpenguin
+  364  kubectl get svc -n otterpenguin
+  365  kubectl get endpoints dinostocks-backend -n otterpenguin
+  366   kubectl get pods -n otterpenguin
+  367  kubectl get networkpolicies -n otterpenguin
+  368  kubectl get svc dinostocks-backend -n otterpenguin
+  369  kubectl get ingress -n otterpenguin
+  370  kubectl logs dinostocks-backend-deployment-695979bd67-5nmj9 -n otterpenguin
+  371  kubectl logs dinostocks-backend-deployment-695979bd67-5nmj9 -n otterpenguin
+  372  kubectl logs dinostocks-backend-deployment-695979bd67-5nmj9 -n otterpenguin
+  373  kubectl describe svc dinostocks-backend -n otterpenguin
+  374  kubectl logs dinostocks-backend-deployment-695979bd67-5nmj9 -n otterpenguin
+  375  kubectl exec -it dinostocks-frontend-deployment-85d57cb88d-qwk5c -n otterpenguin -- /bin/sh
+  376  kubectl exec -it dinostocks-frontend-deployment-85d57cb88d-qwk5c -n otterpenguin -- /bin/sh
+  377  kubectl exec -it dinostocks-frontend-deployment-85d57cb88d-hjzhz -n otterpenguin -- /bin/sh
+  378  history
+  379  kubectl exec -it dinostocks-frontend-deployment-85d57cb88d-hjzhz -n otterpenguin -- /bin/sh
+  380  kubectl exec -it dinostocks-frontend-deployment-85d57cb88d-9smw4 -n otterpenguin -- /bin/sh
+  381  ls
+  382  cd backend/
+  383  ls
+  384  docker buildx build --platform linux/amd64,linux/arm64 -t tsmith4014/dino-app-backend . --push
+  385  set image deployment/dinostocks-backend-deployment  dinostocks-backend=tsmith4014/dino-app-backend:latest -n otterpenguin
+  386  kubectl set image deployment/dinostocks-backend-deployment  dinostocks-backend=tsmith4014/dino-app-backend:latest -n otterpenguin
+  387  kubectl get all --all-namespaces
+  388  kubectl delete deployment dinostocks-backend-deployment -n otterpenguin
+  389  kubectl delete deployment dinostocks-database -n otterpenguin
+  390  kubectl delete deployment dinostocks-frontend-deployment -n otterpenguin
+  391  kubectl get all -n otterpenguin
+  392  kubectl delete service dinostocks-backend -n otterpenguin
+  393  kubectl delete service dinostocks-database -n otterpenguin
+  394  kubectl delete service dinostocks-frontend -n otterpenguin
+  395  kubectl get all -n otterpenguin
+  396  git status
+  397  cat ~/.aws/credentials
+  398  cat ~/.aws/config
+  399  history
+  400  cat ~/.aws/credentials
+  401  cat ~/.aws/config
+  402  aws eks update-kubeconfig --name dinostocks-cluster --region us-east-1
+  403  aws eks update-kubeconfig --name dinostocks-cluster --region us-east-1 --profile otterpenguin
+  404  cat ~/.aws/credentials
+  405  cat ~/.aws/config
+  406  kubectl get nodes
+  407  ls
+  408  cd ..
+  409  ls
+  410  cd dinoStocks
+  411  ls
+  412  cd k8s/
+  413  ls
+  414  kubectl apply -f
+  415  kubectl apply -f .
+  416  kubectl apply -f .
+  417  kubectl get pods
+  418  kubectl get pods -otterpenguin
+  419  kubectl get pods -n otterpenguin
+  420  kubectl describe pod dinostocks-backend-deployment-695979bd67-ffzx2 -n otterpenguin
+  421  kubectl describe pod dinostocks-database-7dbd48dcf8-r6zcd -n otterpenguin
+  422  kubectl describe pod dinostocks-frontend-deployment-85d57cb88d-wtw96 -n otterpenguin
+  423  kubectl describe pod dinostocks-backend-deployment-695979bd67-ffzx2 -n otterpenguin
+  424  kubectl describe pod dinostocks-database-7dbd48dcf8-r6zcd -n otterpenguin
+  425  kubectl describe pod dinostocks-frontend-deployment-85d57cb88d-wtw96 -n otterpenguin
+  426  echo -n 'yourpassword' | base64
+  427  docker ps
+  428  docker images
+  429  ls
+  430  history
+  431   kubectl apply -f .
+  432  kubectl set image deployment/dinostocks-frontend-deployment dinostocks-frontend=tsmith4014/dino-app-frontend:latest -n otterpenguin
+  433  kubectl get pods -n otterpenguin
+  434  kubectl delete pod dinostocks-frontend-deployment-85d57cb88d-wtw96 -n otterpenguin
+  435  kubectl get pods -n otterpenguin
+  436  kubectl get pods -n otterpenguin
+  437  kubectl describe pod dinostocks-backend-deployment-695979bd67-ffzx2 -n otterpenguin
+  438  kubectl describe pod dinostocks-database-7dbd48dcf8-r6zcd -n otterpenguin
+  439  kubectl describe pod dinostocks-frontend-deployment-85d57cb88d-qwk5c -n otterpenguin
+  440  kubectl describe deployment dinostocks-backend-deployment -n otterpenguin
+  441  kubectl describe deployment dinostocks-frontend-deployment -n otterpenguin
+  442  kubectl describe service dinostocks-frontend -n otterpenguin
+  443  ls
+  444  kubectl apply -f dinostocks-frontend-svc.yml -n otterpenguin
+  445  kubectl get service dinostocks-frontend -n otterpenguin
+  446  kubectl get pods -n otterpenguin
+  447  kubectl logs dinostocks-frontend-deployment-85d57cb88d-qwk5c -n otterpenguin
+  448  kubectl describe service dinostocks-frontend -n otterpenguin
+  449  history
+  450  kubectl get pods -n otterpenguin
+  451  kubectl get pods -n otterpenguin
+  452  ls
+  453  kubectl set image deployment/dinostocks-frontend-deployment dinostocks-frontend=tsmith4014/dino-app-frontend:latest -n otterpenguin
+  454  kubectl delete pod dinostocks-frontend-deployment-85d57cb88d-qwk5c -n otterpenguin
+  455  kubectl get pods -n otterpenguin
+  456  kubectl get pods -n otterpenguin
+  457  kubectl get pods -n otterpenguin
+  458  kubectl describe deployment dinostocks-frontend-deployment -n otterpenguin
+  459  kubectl get pods -n otterpenguin
+  460  kubectl logs -f dinostocks-frontend-deployment-85d57cb88d-hjzhz -n otterpenguin
+  461  kubectl get service dinostocks-frontend-service -n otterpenguin
+  462  ls
+  463  history
+  464  ls
+  465  kubectl apply -f .
+  466  kubectl get service dinostocks-backend -n otterpenguin
+  467  kubectl get pods -n otterpenguin
+  468  kubectl delete pod dinostocks-frontend-deployment-85d57cb88d-hjzhz  -n otterpenguin
+  469  kubectl get pods -n otterpenguin
+  470  kubectl get pods -n otterpenguin
+  471  kubectl get pods -n otterpenguin
+  472  kubectl logs dinostocks-backend-deployment-695979bd67-ffzx2 -n otterpenguin
+  473  kubectl logs dinostocks-database-7dbd48dcf8-r6zcd -n otterpenguin
+  474  kubectl logs dinostocks-frontend-deployment-85d57cb88d-9smw4 -n otterpenguin
+  475  clear
+  476  kubectl logs dinostocks-backend-deployment-695979bd67-ffzx2 -n otterpenguin
+  477  clear
+  478  kubectl logs dinostocks-database-7dbd48dcf8-r6zcd -n otterpenguin
+  479  kubectl logs dinostocks-frontend-deployment-85d57cb88d-9smw4 -n otterpenguin
+  480  kubectl get events -n otterpenguin
+  481  clear
+  482  history
+  483  kubectl get pods -n otterpenguin
+  484  ls
+  485  kubectl get deployments -n otterpenguin
+  486   kubectl describe service dinostocks-frontend -n otterpenguin
+  487  kubectl get pods -n otterpenguin
+  488  kubectl logs dinostocks-backend-deployment-695979bd67-5nmj9 -n otterpenguin
+  489  kubectl get pods -n otterpenguin
+  490  kubectl logs dinostocks-backend-deployment-695979bd67-5nmj9 -n otterpenguin
+  491  clear
+  492  kubectl logs dinostocks-backend-deployment-695979bd67-5nmj9 -n otterpenguin
+  493  kubectl logs dinostocks-backend-deployment-695979bd67-5nmj9 -n otterpenguin
+  494  ls
+  495  ls
+  496  cd backend/
+  497  ls
+  498  history
+  499  docker ps
+  500  docker images
+  501  history
+  502  ls
+  503  kubectl get pods -n otterpenguin
+  504  aws configure list
+  505  cat ~/.aws/config
+  506  history
+  507   kubectl config use-context arn:aws:eks:us-east-1:182403015120:cluster/dinostocks-cluster
+  508  kubectl get all -n otterpenguin
+  509  aws configure list
+  510  aws eks update-kubeconfig --name dinostocks-cluster --region us-east-1 --profile otterpenguin
+  511  kubectl get pods -n otterpenguin
+  512  aws eks update-kubeconfig --name dinostocks-cluster --region us-east-1 --profile otterpenguin
+  513  kubectl get pods -n otterpenguin
+  514  ls
+
+
+
+
+
+
+

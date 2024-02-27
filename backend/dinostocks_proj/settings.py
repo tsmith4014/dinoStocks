@@ -1,4 +1,6 @@
 
+
+import os #added to allow for environment variables
 from pathlib import Path
 from dotenv import dotenv_values
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -75,19 +77,41 @@ WSGI_APPLICATION = "dinostocks_proj.wsgi.application"
 
 
 # Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "dinostocks_db",
-        "USER": "megan",
-        "PASSWORD": "123",
-        # "HOST": "localhost",  # Use the name of your PostgreSQL container here
-        "HOST": "my-dinostocks-db",  # Use the name of your PostgreSQL container here
-        "PORT": "5432",
+        "NAME": "dinostocks_db",  # Ensure this matches the actual database name
+        "USER": "admin",  # Change to the correct user as per your Kubernetes Secret/Config
+        "PASSWORD": "yourpassword",  # Ensure this is the correct password
+        "HOST": "dinostocks-database",  # Correct service name for your PostgreSQL
+        "PORT": "5432",  # Default PostgreSQL port
     }
 }
+
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": os.environ.get("DB_NAME", default="dinostocks_db"),
+#         "USER": os.environ.get("DB_USER", default="admin"),
+#         "PASSWORD": os.environ.get("DB_PASSWORD", default=""),
+#         "HOST": os.environ.get("DB_HOST", default="dinostocks-database"),
+#         "PORT": os.environ.get("DB_PORT", default="5432"),
+#     }
+# }
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "dinostocks_db",
+#         "USER": "megan",
+#         "PASSWORD": "123",
+#         # "HOST": "dinostocks-database",  # Use the name of your PostgreSQL service here EKS
+#         "HOST": "localhost",  # Use for local development 
+#         # "HOST": "my-dinostocks-db",  # Use the name of your PostgreSQL container here 
+#         "PORT": "5432",
+#     }
+# }
 
 
 # Password validation
