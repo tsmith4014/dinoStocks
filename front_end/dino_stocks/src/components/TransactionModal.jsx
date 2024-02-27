@@ -32,7 +32,7 @@ const TransactionModal = ({ show, handleClose, shareId, fetchPortfolio, token, i
 
         const response = await axios({
           method: method,
-          url: `http://127.0.0.1:8000/api/v1/shares/${endpoint}`,
+          url: `/api/v1/shares/${endpoint}`,
           data: data,
           headers: {
             Authorization: `Token ${token}`

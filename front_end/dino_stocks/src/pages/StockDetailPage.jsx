@@ -34,7 +34,7 @@ const StockDetailPage = () => {
 
   const fetchStockData = async () => {
     try {
-      let response = await axios.get(`http://127.0.0.1:8000/api/v1/stockmarket/${id}/`)
+      let response = await axios.get(`/api/v1/stockmarket/${id}/`)
       setData(response.data)
     }
     catch (error) {

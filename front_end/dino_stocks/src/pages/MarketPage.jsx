@@ -43,7 +43,7 @@ const MarketPage = () => {
 
   const fetchStockData = async () => {
     try {
-      let response = await axios.get(`http://127.0.0.1:8000/api/v1/stockmarket/`)
+      let response = await axios.get(`/api/v1/stockmarket/`)
       setData(response.data)
     }
     catch (error) {
@@ -68,7 +68,7 @@ const MarketPage = () => {
   const fetchPortfolio = async () => {
     if (token) {
       try {
-        let response = await axios.get(`http://127.0.0.1:8000/api/v1/portfolio/`, {
+        let response = await axios.get(`/api/v1/portfolio/`, {
           headers: { Authorization: `Token ${token}` }
         });
 
