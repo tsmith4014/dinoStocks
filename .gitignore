@@ -3,3 +3,4 @@ __pycache__
 .env
 node_modules
 venv/
+k8s/dinostocks-secrets.yml
