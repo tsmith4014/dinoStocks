@@ -1,3 +1,4 @@
+# Define the IAM role for the EKS cluster
 resource "aws_iam_role" "dinostocks-iam-role" {
   name = "dinostocks-eks-iam-role"
   path = "/"
@@ -16,6 +17,7 @@ resource "aws_iam_role" "dinostocks-iam-role" {
   })
 }
 
+# Attach policies to the dinostocks-iam-role
 resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
   role       = aws_iam_role.dinostocks-iam-role.name
@@ -26,11 +28,12 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly-EK
   role       = aws_iam_role.dinostocks-iam-role.name
 }
 
-resource "aws_iam_role_policy_attachment" "CloudWatchDashboard" {
-  policy_arn = "arn:aws:iam::aws:policy/CloudWatchFullAccess"
+resource "aws_iam_role_policy_attachment" "CloudWatchCustom" {
+  policy_arn = aws_iam_policy.DinostocksCloudWatchPolicy.arn
   role       = aws_iam_role.dinostocks-iam-role.name
 }
 
+# Define the IAM role for the worker nodes
 resource "aws_iam_role" "workernodes" {
   name = "eks-node-group-example"
  
@@ -46,6 +49,7 @@ resource "aws_iam_role" "workernodes" {
   })
 }
 
+# Attach policies to the worker nodes role
 resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
   role       = aws_iam_role.workernodes.name
@@ -63,5 +67,40 @@ resource "aws_iam_role_policy_attachment" "EC2InstanceProfileForImageBuilderECRC
 
 resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+  role       = aws_iam_role.workernodes.name
+}
+
+# Define the custom IAM policy for CloudWatch access
+resource "aws_iam_policy" "DinostocksCloudWatchPolicy" {
+  name        = "DinostocksCloudWatchPolicy"
+  description = "Policy to allow EKS monitoring"
+
+  policy = <<POLICY
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "cloudwatch:GetMetricData",
+                "cloudwatch:GetMetricStatistics",
+                "eks:ListNodeGroups",
+                "eks:ListClusters"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "cloudwatch:Region": "us-east-1"
+                }
+            }
+        }
+    ]
+}
+POLICY
+}
+
+# Attach the custom IAM policy to the worker nodes role
+resource "aws_iam_role_policy_attachment" "CloudWatchDashboard" {
+  policy_arn = aws_iam_policy.DinostocksCloudWatchPolicy.arn
   role       = aws_iam_role.workernodes.name
 }
