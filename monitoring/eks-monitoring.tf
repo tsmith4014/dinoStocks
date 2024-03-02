@@ -1,91 +1,113 @@
-/*
-# CloudWatch Dashboard for "dinostocks-cluster" EKS Monitoring
+
 resource "aws_cloudwatch_dashboard" "eks_monitoring_dashboard" {
   dashboard_name = "dinoStocks_EKS_Monitoring_Dashboard"
   
   dashboard_body = jsonencode({
-    "widgets": [
+    widgets = [
       {
-        "type": "metric",
-        "x": 0,
-        "y": 0,
-        "width": 6,
-        "height": 6,
-        "properties": {
-          "title": "List Node Groups",
-          "metrics": [
+        type   = "metric"
+        x      = 0
+        y      = 0
+        width  = 6
+        height = 3
+
+        properties = {
+          metrics = [
             [
-              "AWS/EKS",
-              "ListNodegroups",
-              "Sum",
-              "ClusterName",
-              "dinostocks-cluster"
+              "AWS/Usage",       # Namespace
+              "CallCount",       # Metric name
+              "Type",            # Dimension name
+              "API",             # Dimension value
+              "Resource",        # Dimension name
+              "ListClusters",    # Dimension value
+              "Service",         # Dimension name
+              "EKS",             # Dimension value
+              "Class",           # Dimension name
+              "None",            # Dimension value
             ]
-          ],
-          "view": "singleValue",
-          "region": "us-east-1"
+          ]
+          period = 60
+          stat   = "Average"
+          region = "us-east-1"
+          title  = "Number of EKS Clusters"
+          view   = "singleValue"
         }
       },
       {
-        "type": "metric",
-        "x": 6,
-        "y": 0,
-        "width": 6,
-        "height": 6,
-        "properties": {
-          "title": "List Clusters",
-          "metrics": [
+        type   = "metric"
+        x      = 6
+        y      = 0
+        width  = 6
+        height = 3
+
+        properties = {
+          metrics = [
             [
-              "AWS/EKS",
-              "ListClusters",
-              "Sum",
-              "ClusterName",
-              "dinostocks-cluster"
+              "AWS/Usage",       # Namespace
+              "CallCount",       # Metric name
+              "Type",            # Dimension name
+              "API",             # Dimension value
+              "Resource",        # Dimension name
+              "ListNodegroups",    # Dimension value
+              "Service",         # Dimension name
+              "EKS",             # Dimension value
+              "Class",           # Dimension name
+              "None",            # Dimension value
             ]
-          ],
-          "view": "singleValue",
-          "region": "us-east-1"
+          ]
+          period = 60
+          stat   = "Average"
+          region = "us-east-1"
+          title  = "Number of EKS Clusters Node Groups"
+          view   = "singleValue"
         }
       },
       {
-        "type": "metric",
-        "x": 0,
-        "y": 6,
-        "width": 6,
-        "height": 6,
-        "properties": {
-          "title": "Incoming Log Events",
-          "metrics": [
+        type   = "metric"
+        x      = 0
+        y      = 3
+        width  = 6
+        height = 3
+
+        properties = {
+          metrics = [
             [
-              "AWS/Logs",
-              "IncomingLogEvents",
-              "Sum"
+              "AWS/Logs",       # Namespace
+              "IncomingBytes",       # Metric name
+              "LogGroupName",        # Dimension name
+              "/aws/eks/dinostocks-cluster/cluster",   
             ]
-          ],
-          "view": "singleValue",
-          "region": "us-east-1"
+          ]
+          period = 60
+          stat   = "Average"
+          region = "us-east-1"
+          title  = "EKS IncomingBytes"
+          view   = "singleValue"
         }
       },
       {
-        "type": "metric",
-        "x": 6,
-        "y": 6,
-        "width": 6,
-        "height": 6,
-        "properties": {
-          "title": "Incoming Bytes",
-          "metrics": [
+        type   = "metric"
+        x      = 6
+        y      = 3
+        width  = 6
+        height = 3
+
+        properties = {
+          metrics = [
             [
-              "AWS/Logs",
-              "IncomingBytes",
-              "Sum"
+              "AWS/Logs",       # Namespace
+              "IncomingLogEvents",       # Metric name
+              "LogGroupName",        # Dimension name
+              "/aws/eks/dinostocks-cluster/cluster",   
             ]
-          ],
-          "view": "singleValue",
-          "region": "us-east-1"
+          ]
+          period = 60
+          stat   = "Average"
+          region = "us-east-1"
+          title  = "EKS IncomingLogEvents"
+          view   = "singleValue"
         }
-      }
+      },
     ]
   })
 }
-*/
