@@ -14,6 +14,7 @@ env = dotenv_values(".env")
 SECRET_KEY = "django-insecure-g=-^q-yd9am)f0gfrwey7q*$ps+zo7b6sf9ac5t&ds(s^c*)mx"
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = False
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
@@ -36,6 +37,7 @@ INSTALLED_APPS = [
     "realstonks_app",
     "historicals_app",
     "shares_app",
+     "django_celery_beat",  # Add this line so eks celery beat pod can interfact with the django backend pod
 ]
 
 MIDDLEWARE = [
@@ -157,6 +159,11 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Celery Server to run routine tasks
-CELERY_BROKER_URL = "redis://localhost:6379/0"
-CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+# Celery Server to run routine tasks in development in background
+# CELERY_BROKER_URL = "redis://localhost:6379/0"
+# CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+
+
+# Celery Configuration to run routine tasks in background in production
+CELERY_BROKER_URL = "redis://dinostocks-redis:6379/0"
+CELERY_RESULT_BACKEND = "redis://dinostocks-redis:6379/0"

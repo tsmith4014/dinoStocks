@@ -13,11 +13,10 @@ spec:
       labels:
         app: dinostocks-backend
     spec:
-      containers:
-      - name: dinostocks-backend
+      initContainers:
+      - name: init-migrate
         image: tsmith4014/dino-app-backend:latest
-        ports:
-          - containerPort: 8000
+        command: ["python", "manage.py", "migrate"]
         resources:
           requests:
             memory: "100Mi"
@@ -25,34 +24,43 @@ spec:
           limits:
             memory: "200Mi"
             cpu: "200m"
+        envFrom:
+        - configMapRef:
+            name: dinostocks-configmap
         env:
-          - name: DB_USER
-            valueFrom:
-              configMapKeyRef:
-                name: dinostocks-configmap
-                key: DB_USER
-          - name: DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: dinostocks-secrets
-                key: DB_PASSWORD
-          - name: DB_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: dinostocks-configmap
-                key: DB_HOST
-          - name: DB_PORT
-            valueFrom:
-              configMapKeyRef:
-                name: dinostocks-configmap
-                key: DB_PORT
-          - name: DB_NAME
-            valueFrom:
-              configMapKeyRef:
-                name: dinostocks-configmap
-                key: DB_NAME
-          - name: RAPID_API_KEY  # Added this section
-            valueFrom:
-              secretKeyRef:
-                name: dinostocks-secrets
-                key: RAPID_API_KEY
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: dinostocks-secrets
+              key: DB_PASSWORD
+      - name: init-loaddata
+        image: tsmith4014/dino-app-backend:latest
+        command: ["python", "manage.py", "loaddata", "stock_data.json"]
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "100m"
+          limits:
+            memory: "200Mi"
+            cpu: "200m"
+        envFrom:
+        - configMapRef:
+            name: dinostocks-configmap
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: dinostocks-secrets
+              key: DB_PASSWORD
+      containers:
+      - name: dinostocks-backend
+        image: tsmith4014/dino-app-backend:latest
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "100m"
+          limits:
+            memory: "200Mi"
+            cpu: "200m"

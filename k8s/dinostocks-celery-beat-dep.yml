@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dinostocks-celery-beat
+  namespace: otterpenguin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dinostocks-celery-beat
+  template:
+    metadata:
+      labels:
+        app: dinostocks-celery-beat
+    spec:
+      containers:
+        - name: celery-beat
+          image: tsmith4014/dino-app-backend:django-celery-beat-3.2
+          command: ["celery", "-A", "dinostocks_proj", "beat", "-l", "info", "--scheduler", "django_celery_beat.schedulers:DatabaseScheduler"]
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "100m"
+            limits:
+              memory: "200Mi"
+              cpu: "200m"
+          envFrom:
+            - configMapRef:
+                name: dinostocks-configmap
+          env:
+            - name: DJANGO_SETTINGS_MODULE
+              value: "dinostocks_proj.settings"
+            - name: CELERY_BROKER_URL
+              value: "redis://dinostocks-redis:6379/0"
+            - name: CELERY_RESULT_BACKEND
+              value: "redis://dinostocks-redis:6379/0"
+            - name: PATH
+              value: "/backend/dependencies/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"

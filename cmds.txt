@@ -1,8 +1,10 @@
+tsmith4014/dino-app-backend:latest 
  
+ find / -name 'django_celery_beat*'
  
 command: sh -c "python manage.py migrate && python manage.py loaddata stock_data.json
 
-
+kubectl delete deployments --all -n otterpenguin
 
 docker buildx build --platform linux/amd64,linux/arm64 -t tsmith4014/dino-app-frontend . --push
 
@@ -10,9 +12,15 @@ kubectl set image deployment/dinostocks-frontend-deployment dinostocks-frontend=
 
 docker buildx build --platform linux/amd64,linux/arm64 -t tsmith4014/dino-app-backend . --push
 
+docker buildx build --platform linux/amd64,linux/arm64 -t tsmith4014/dino-app-backend:celery . --push
+
 kubectl set image deployment/dinostocks-frontend-deployment dinostocks-frontend=tsmith4014/dino-app-frontend:latest -n otterpenguin
 
 kubectl set image deployment/dinostocks-backend-deployment  dinostocks-backend=tsmith4014/dino-app-backend:latest -n otterpenguin
+
+    kubectl set image deployment/dinostocks-celery-beat celery-beat=tsmith4014/dino-app-backend:latest -n otterpenguin
+    kubectl set image deployment/dinostocks-celery-worker celery-worker=tsmith4014/dino-app-backend:latest -n otterpenguin
+
 
 
 docker build -t dino-app-psql .
@@ -23,6 +31,13 @@ docker run --name dino-app-frontend --network=dinostocks-network -p 5173:5173 -d
 
 docker build -t dino-app-backend .
 docker run --name dino-app-backend --network=dinostocks-network -p 8000:8000 -d dino-app-backend
+
+
+
+
+kubectl scale deployment dinostocks-backend-deployment --replicas=0
+kubectl scale deployment dinostocks-celery-beat --replicas=0
+kubectl scale deployment dinostocks-celery-worker --replicas=0
 
 
 
@@ -701,4 +716,53 @@ server {
 
 
 
+# Build stage
+FROM python:latest AS builder
 
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR /backend
+
+# Install system dependencies required for build
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        gcc \
+        libpq-dev \
+        postgresql-client
+
+# Upgrade pip and install project dependencies into /backend/dependencies
+COPY . .
+RUN pip3 install --upgrade pip
+RUN pip install --target=/backend/dependencies -r requirements.txt
+RUN pip install --target=/backend/dependencies django-celery-beat==2.2.1
+
+# Deployment image
+FROM python:alpine
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Install runtime dependencies directly into system Python environment
+# Ensure postgresql-libs, postgresql-dev, gcc, and musl-dev are installed for psycopg2-binary and retained for runtime
+RUN apk add --no-cache postgresql-libs postgresql-dev gcc musl-dev && \
+    pip install psycopg2-binary gunicorn celery
+
+EXPOSE 8000
+
+WORKDIR /backend
+
+# Copy application code and dependencies from the builder stage
+COPY --from=builder /backend .
+
+# Set environment variable to include dependencies in the Python path
+ENV PYTHONPATH=/backend/dependencies
+
+# Add dependencies to the PATH the difference between the two is that the first one is for the python path and the second one is for the system path
+ENV PATH="/backend/dependencies/bin:${PATH}"
+
+# Command to run the application using gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "dinostocks_proj.wsgi:application"]
+
+# Development image
+# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
