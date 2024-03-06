@@ -1,14 +1,11 @@
-Certainly, I can create a Markdown-styled README that includes the AWS infrastructure diagram you've provided.
-
-```markdown
 # Cloud Infrastructure Overview
 
 ## Application Architecture on AWS EKS
 
 This README provides an overview of the cloud infrastructure hosting our Django/React/PostgreSQL application on AWS EKS. The below diagram illustrates the network architecture, showcasing how the different AWS components and Kubernetes resources are orchestrated to deliver our application.
 
-![AWS Infrastructure Diagram](attachment://Screenshot_2024-03-06_at_12.43.25_PM.png)
-
+![AWS Infrastructure Diagram](src="/static/aws_eks.png" width="150")
+ <img src="/static/aws_eks.png" width="150" />
 ### Components:
 
 - **AWS Cloud**: Root layer that encapsulates all infrastructure components within the `us-east-1` region.
@@ -76,8 +73,4 @@ This README and the accompanying diagram provide a high-level overview of the in
 For a detailed guide on the setup, deployment processes, and best practices, please refer to the supplementary documentation provided in our repository.
 
 ---
-```
 
-In a real-world scenario, you would attach the `Screenshot_2024-03-06_at_12.43.25_PM.png` file to your repository, and the link in the markdown file would reference the image directly from your repository. 
-
-If you're presenting this README in a PowerPoint slide, you can embed the image directly into the slide and use the content above as the narration script. Please note that placeholders like `attachment://Screenshot_2024-03-06_at_12.43.25_PM.png` are for illustrative purposes and should be replaced with the actual URL or file path in your presentation or repository.
