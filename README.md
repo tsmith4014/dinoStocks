@@ -5,9 +5,10 @@
 This README provides an overview of the cloud infrastructure hosting our Django/React/PostgreSQL application on AWS EKS. The below diagram illustrates the network architecture, showcasing how the different AWS components and Kubernetes resources are orchestrated to deliver our application.
 
 <p align="center">
-  <img src="/static/aws_eks.png" alt="AWS EKS Architecture" width="850"/>
+  <img src="static/aws_eks.png" alt="AWS EKS Architecture" width="850"/>
 </p>
-### Components:
+
+### Components
 
 - **AWS Cloud**: Root layer that encapsulates all infrastructure components within the `us-east-1` region.
 
@@ -15,7 +16,8 @@ This README provides an overview of the cloud infrastructure hosting our Django/
 
 - **Subnet**: Segments of our VPC where resources are launched. Each subnet resides in a different Availability Zone (AZ) for high availability.
 
-- **Load Balancers**: 
+- **Load Balancers**:
+
   - An Application Load Balancer (ALB) distributes incoming application traffic across multiple targets, such as EC2 instances, in multiple Availability Zones.
   - A Network Load Balancer (NLB) handles traffic for our backend services.
 
@@ -40,8 +42,8 @@ This README provides an overview of the cloud infrastructure hosting our Django/
 1. **Development and Provisioning**:
    - Developers build the Docker images for the application components.
    - The built images are pushed to Docker Hub.
-   
 2. **Deployment**:
+
    - Kubernetes pulls the necessary images from Docker Hub and runs them as pods in the EKS cluster.
 
 3. **User Interaction**:
@@ -74,4 +76,3 @@ This README and the accompanying diagram provide a high-level overview of the in
 For a detailed guide on the setup, deployment processes, and best practices, please refer to the supplementary documentation provided in our repository.
 
 ---
-
