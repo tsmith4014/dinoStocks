@@ -10,3 +10,5 @@ terraform.tfstate.backup
 .terraform.tfstate.lock.info
 *.tfvars
 notes.txt
+/static/notes.txt
+k8s/dinostocks-secrets.yml

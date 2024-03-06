@@ -15,15 +15,15 @@ spec:
     spec:
       containers:
       - name: dinostocks-frontend
-        image: matthewjames4187/dinostocks_frontend:latest
+        image: tsmith4014/dino-app-frontend:latest
         ports:
           - containerPort: 5173
         resources:
           requests:
-            memory: "50Mi"
+            memory: "500Mi"
             cpu: "50m"
           limits:
-            memory: "100Mi"
+            memory: "500Mi"
             cpu: "100m"
         env:
           - name: REACT_APP_BACKEND_HOST

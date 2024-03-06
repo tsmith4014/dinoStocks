@@ -4,10 +4,9 @@ metadata:
   name: dinostocks-frontend
   namespace: otterpenguin
 spec:
-  type: NodePort
   ports:
-  - port: 5173
-    targetPort: 5173
-    nodePort: 30080
+  - port: 80
+    targetPort: 80
   selector:
     app: dinostocks-frontend
+  type: LoadBalancer

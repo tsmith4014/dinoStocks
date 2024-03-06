@@ -1,0 +1,87 @@
+version: '3.8'  # Docker Compose file version
+
+services:
+  db:
+    image: postgres:latest  # Use the latest version of the PostgreSQL image
+    container_name: my-dinostocks-db  # Name of the container
+    environment:  # Environment variables for the PostgreSQL service
+      POSTGRES_DB: dinostocks_db  # Database name
+      POSTGRES_USER: megan  # Database user
+      POSTGRES_PASSWORD: 123  # Database password
+    ports:
+      - "5432:5432"  # Map port 5432 in the container to port 5432 on the host
+
+  backend:
+    build:  # Build the Docker image for the backend
+      context: ./backend  # Docker build context
+      dockerfile: Dockerfile  # Dockerfile path
+    container_name: dino-app-backend  # Name of the container
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"  # Command to run after the container starts
+    volumes:
+      - ./backend:/backend  # Mount the ./backend directory on the host to /backend in the container
+    ports:
+      - "8000:8000"  # Map port 8000 in the container to port 8000 on the host
+    depends_on:
+      - db  # This service depends on the db service
+    environment:  # Environment variables for the backend service
+      DB_HOST: db  # Database host
+      DB_PORT: 5432  # Database port
+      PYTHONPATH: /backend/dependencies  # Python path
+
+  frontend:
+    build:  # Build the Docker image for the frontend
+      context: ./front_end/dino_stocks  # Docker build context
+      dockerfile: Dockerfile  # Dockerfile path
+    container_name: dino-app-frontend  # Name of the container
+    ports:
+      - "5173:5173"  # Map port 5173 in the container to port 5173 on the host
+    depends_on:
+      - backend  # This service depends on the backend service
+
+
+
+
+
+
+
+
+
+# version: '3.8'
+
+# services:
+#   db:
+#     image: postgres:latest
+#     container_name: my-dinostocks-db
+#     environment:
+#       POSTGRES_DB: dinostocks_db
+#       POSTGRES_USER: megan
+#       POSTGRES_PASSWORD: 123
+#     ports:
+#       - "5432:5432"
+
+#   backend:
+#     build:
+#       context: ./backend
+#       dockerfile: Dockerfile
+#     container_name: dino-app-backend
+#     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+#     volumes:
+#       - ./backend:/backend
+#     ports:
+#       - "8000:8000"
+#     depends_on:
+#       - db
+#     environment:
+#       DB_HOST: db
+#       DB_PORT: 5432
+#       PYTHONPATH: /backend/dependencies
+
+#   frontend:
+#     build:
+#       context: ./front_end/dino_stocks
+#       dockerfile: Dockerfile
+#     container_name: dino-app-frontend
+#     ports:
+#       - "5173:5173"
+#     depends_on:
+#       - backend

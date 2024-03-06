@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dinostocks-frontend
+  namespace: otterpenguin
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80 #testing 80 for nginx but 5173 is what works
+    targetPort: 80 #testing 80 for nginx but 5173 is what works
+  selector:
+    app: dinostocks-frontend
+

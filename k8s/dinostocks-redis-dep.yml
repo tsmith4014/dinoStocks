@@ -1,19 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis
+  name: dinostocks-redis-deployment
+  namespace: otterpenguin
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: redis
+      app: dinostocks-redis
   template:
     metadata:
       labels:
-        app: redis
+        app: dinostocks-redis
     spec:
       containers:
-      - name: redis
+      - name: dinostocks-redis
         image: redis:latest
         ports:
         - containerPort: 6379

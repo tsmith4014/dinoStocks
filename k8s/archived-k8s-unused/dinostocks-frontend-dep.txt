@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dinostocks-frontend-deployment
+  namespace: otterpenguin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dinostocks-frontend
+  template:
+    metadata:
+      labels:
+        app: dinostocks-frontend
+    spec:
+      containers:
+      - name: dinostocks-frontend
+        image: tsmith4014/dino-app-frontend:latest  # Ensure this image has Nginx configured as described
+        ports:
+          - containerPort: 80  # Nginx listens on port 80
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "50m"
+          limits:
+            memory: "500Mi"
+            cpu: "100m"
