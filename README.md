@@ -4,8 +4,9 @@
 
 This README provides an overview of the cloud infrastructure hosting our Django/React/PostgreSQL application on AWS EKS. The below diagram illustrates the network architecture, showcasing how the different AWS components and Kubernetes resources are orchestrated to deliver our application.
 
-![AWS Infrastructure Diagram](src="/static/aws_eks.png" width="150")
- <img src="/static/aws_eks.png" width="150" />
+<p align="center">
+  <img src="/static/aws_eks.png" alt="AWS EKS Architecture" width="850"/>
+</p>
 ### Components:
 
 - **AWS Cloud**: Root layer that encapsulates all infrastructure components within the `us-east-1` region.
