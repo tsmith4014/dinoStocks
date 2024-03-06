@@ -3,7 +3,6 @@ FROM python:latest AS builder
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-
 WORKDIR /backend
 
 # Install system dependencies required for build
@@ -25,12 +24,9 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # Install runtime dependencies directly into system Python environment
-# Ensure postgresql-libs, postgresql-dev, gcc, and musl-dev are installed for psycopg2-binary and retained for runtime
 RUN apk add --no-cache postgresql-libs postgresql-dev gcc musl-dev && \
     pip install psycopg2-binary gunicorn
-
 EXPOSE 8000
-
 WORKDIR /backend
 
 # Copy application code and dependencies from the builder stage

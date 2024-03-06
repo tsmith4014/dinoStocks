@@ -33,6 +33,11 @@ spec:
             secretKeyRef:
               name: dinostocks-secrets
               key: DB_PASSWORD
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: dinostocks-secrets
+              key: SECRET_KEY
       - name: init-loaddata
         image: tsmith4014/dino-app-backend:latest
         command: ["python", "manage.py", "loaddata", "stock_data.json"]
@@ -52,6 +57,11 @@ spec:
             secretKeyRef:
               name: dinostocks-secrets
               key: DB_PASSWORD
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: dinostocks-secrets
+              key: SECRET_KEY
       containers:
       - name: dinostocks-backend
         image: tsmith4014/dino-app-backend:latest
@@ -64,3 +74,9 @@ spec:
           limits:
             memory: "200Mi"
             cpu: "200m"
+        env:
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: dinostocks-secrets
+              key: SECRET_KEY
