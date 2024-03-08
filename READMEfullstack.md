@@ -1,4 +1,4 @@
-DinoStocks - Learn About the Stock Market with Dinosaurs!!
+DinoStocks - Learn About the Stock Market with Dinosaurs!!!
 
 Overview
 
