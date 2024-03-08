@@ -32,7 +32,7 @@ jobs:
       run: |
         docker build -t ${{ env.DOCKER_USERNAME }}/dino-app-backend:latest ./backend
         docker push ${{ env.DOCKER_USERNAME }}/dino-app-backend:latest
-        docker build -t ${{ env.DOCKER_USERNAME }}/dino-app-frontend:latest ./front_end
+        docker build -t ${{ env.DOCKER_USERNAME }}/dino-app-frontend:latest ./front_end/dino_stocks
         docker push ${{ env.DOCKER_USERNAME }}/dino-app-frontend:latest
 
   deploy:
